@@ -15,10 +15,11 @@ body {
   width: 100%;
 }
 
-.rocksGlass {
+
+/* .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
-}
+} */
 
 /*
 #iceLeft {
@@ -34,7 +35,7 @@ body {
 }
 */
 
-.meals > .logo {
+/* .meals > .logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;
   font-family: Montserrat , sans-serif;
@@ -71,3 +72,5 @@ body {
     transform: rotate(-10deg);
   }
 }
+
+*/
