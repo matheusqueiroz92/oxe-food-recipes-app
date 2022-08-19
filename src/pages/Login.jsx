@@ -1,58 +1,89 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import './login.css';
 
 function Login() {
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
-  const [isDisabled, setDisabled] = useState(true);
+  const [login, setLogin] = useState({
+    email: '',
+    password: '',
+    buttonLogin: true,
+  });
+
+  // const [userPassword, setUserPassword] = useState('');
+  // const [isDisabled, setDisabled] = useState(true);
 
   const validateInputs = () => {
+    const { email, password } = login;
     const SIX = 6;
     const MENOS_UM = -1;
-    if (userEmail.search(/\S+@\S+\.\S+/) !== MENOS_UM && userPassword.length >= SIX) {
-      setDisabled(false);
+    if ((email.search(/\S+@\S+\.\S+/) !== MENOS_UM) && password.length > SIX) {
+      setLogin((prevLogin) => ({
+        ...prevLogin,
+        buttonLogin: false,
+      }));
+    } else {
+      setLogin((prevLogin) => ({
+        ...prevLogin,
+        buttonLogin: true,
+      }));
     }
   };
 
-  const handleEmail = ({ target: { value } }) => {
-    setUserEmail(value);
-  };
-
-  const handlePassWord = ({ target: { value } }) => {
-    setUserPassword(value);
+  const handleLogin = ({ target }) => {
+    const { name, value } = target;
+    setLogin((prevLogin) => ({
+      ...prevLogin,
+      [name]: value,
+    }));
     validateInputs();
   };
 
-  return (
-    <form>
-      <label htmlFor="email-input">
-        Email
-        <input
-          id="email-input"
-          type="email"
-          value={ userEmail }
-          onChange={ handleEmail }
-          data-testid="email-input"
-        />
-      </label>
-      <label htmlFor="password-input">
-        Password
-        <input
-          id="password-input"
-          type="password"
-          value={ userPassword }
-          onChange={ handlePassWord }
-          data-testid="password-input"
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="login-submit-btn"
-        disabled={ isDisabled }
-      >
-        Enter
+  // const handlePassWord = ({ target: { value } }) => {
+  //   setUserPassword(value);
+  //   validateInputs();
+  // };
 
-      </button>
-    </form>
+  const { email, password, buttonLogin } = login;
+
+  return (
+    <div className="form-login">
+      <h1>LOGIN</h1>
+      <form>
+        <label htmlFor="email-input">
+          Email:
+          <input
+            className="input-login"
+            id="email-input"
+            type="email"
+            name="email"
+            value={ email }
+            onChange={ handleLogin }
+            data-testid="email-input"
+          />
+        </label>
+        <label htmlFor="password-input">
+          Password:
+          <input
+            className="input-login"
+            id="password-input"
+            type="password"
+            name="password"
+            value={ password }
+            onChange={ handleLogin }
+            data-testid="password-input"
+          />
+        </label>
+        <button
+          className="button-login"
+          type="button"
+          name="buttonLogin"
+          data-testid="login-submit-btn"
+          disabled={ buttonLogin }
+        >
+          Enter
+
+        </button>
+      </form>
+    </div>
   );
 }
 

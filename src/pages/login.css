@@ -1,0 +1,22 @@
+.form-login {
+  background-color: rgb(157, 158, 250);
+  height: 640px;
+  text-align: center;
+  width: 360px;
+}
+
+.input-login {
+  align-items: center;
+  display: flex;
+  height: 30px;
+  justify-items: center;
+  width: 250px;
+}
+
+.button-login {
+  border-radius: 10px;
+  background-color: rgb(221, 221, 221);
+  height: 50px;
+  margin-top: 10px;
+  width: 250px;
+}
