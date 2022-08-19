@@ -16,15 +16,10 @@ function Login() {
     const { email, password } = login;
     const SIX = 6;
     const MENOS_UM = -1;
-    if ((email.search(/\S+@\S+\.\S+/) !== MENOS_UM) && password.length > SIX) {
+    if ((email.search(/\S+@\S+\.\S+/) !== MENOS_UM) && password.length >= SIX) {
       setLogin((prevLogin) => ({
         ...prevLogin,
         buttonLogin: false,
-      }));
-    } else {
-      setLogin((prevLogin) => ({
-        ...prevLogin,
-        buttonLogin: true,
       }));
     }
   };
