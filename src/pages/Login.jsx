@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './login.css';
 import PropTypes from 'prop-types';
 
@@ -6,24 +6,23 @@ function Login({ history }) {
   const [login, setLogin] = useState({
     email: '',
     password: '',
-    buttonLogin: true,
   });
 
-  // const 111
-  // const [userPassword, setUserPassword] = useState('');
-  // const [isDisabled, setDisabled] = useState(true);
+  const [toogleButton, setToogleButton] = useState(true);
 
-  const validateInputs = () => {
-    const { email, password } = login;
-    const SIX = 6;
-    const MENOS_UM = -1;
-    if ((email.search(/\S+@\S+\.\S+/) !== MENOS_UM) && password.length >= SIX) {
-      setLogin((prevLogin) => ({
-        ...prevLogin,
-        buttonLogin: false,
-      }));
-    }
-  };
+  useEffect(() => {
+    const validateInputs = () => {
+      const { email, password } = login;
+      const SEVEN = 7;
+      const MENOS_UM = -1;
+      if ((email.search(/\S+@\S+\.\S+/) !== MENOS_UM) && password.length >= SEVEN) {
+        setToogleButton(false);
+      } else {
+        setToogleButton(true);
+      }
+    };
+    validateInputs();
+  }, [login]);
 
   const handleLogin = ({ target }) => {
     const { name, value } = target;
@@ -31,7 +30,6 @@ function Login({ history }) {
       ...prevLogin,
       [name]: value,
     }));
-    validateInputs();
   };
 
   const handleClick = () => {
@@ -42,12 +40,7 @@ function Login({ history }) {
     history.push('/foods');
   };
 
-  // const handlePassWord = ({ target: { value } }) => {
-  //   setUserPassword(value);
-  //   validateInputs();
-  // };
-
-  const { email, password, buttonLogin } = login;
+  const { email, password } = login;
 
   return (
     <div className="form-login">
@@ -82,7 +75,7 @@ function Login({ history }) {
           type="button"
           name="buttonLogin"
           data-testid="login-submit-btn"
-          disabled={ buttonLogin }
+          disabled={ toogleButton }
           onClick={ handleClick }
         >
           Enter
