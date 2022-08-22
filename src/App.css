@@ -1,9 +1,13 @@
 body {
+  box-sizing: border-box;
   height: 640px;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
   width: 360px;
 }
 
-.meals {
+/* .meals {
   align-items: center;
   background: #0fa36b;
   color: #464646;
@@ -18,7 +22,7 @@ body {
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
-}
+} */
 
 /*
 #iceLeft {
@@ -34,7 +38,7 @@ body {
 }
 */
 
-.meals > .logo {
+/* .meals > .logo {
   animation: shake 1.5s infinite ease;
   color: aliceblue;
   font-family: Montserrat , sans-serif;
@@ -70,4 +74,4 @@ body {
   100% {
     transform: rotate(-10deg);
   }
-}
+} */
