@@ -5,7 +5,6 @@ import SearchIcon from '../images/searchIcon.svg';
 
 const Header = ({ title, profile, search, history }) => {
   const redirectToProfile = () => {
-    console.log('Entrei');
     history.push('/profile');
   };
   return (
