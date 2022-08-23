@@ -1,10 +1,10 @@
 import React from 'react';
 import Header from '../components/Header';
 
-const Foods = () => (
+const Drinks = () => (
   <div>
-    <Header title="Foods" profile search />
+    <Header title="Drinks" profile search />
   </div>
 );
 
-export default Foods;
+export default Drinks;
