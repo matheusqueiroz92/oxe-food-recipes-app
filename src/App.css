@@ -19,7 +19,8 @@ body {
   width: 100%;
 }
 
-.rocksGlass {
+
+/* .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
 } */
@@ -74,4 +75,4 @@ body {
   100% {
     transform: rotate(-10deg);
   }
-} */
+

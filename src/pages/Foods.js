@@ -1,5 +1,15 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Footer from '../components/Footer';
+
+function Foods() {
+  return (
+    <>
+      <div>foods</div>
+      <Footer />
+    </>
+  );
+}
 import Header from '../components/Header';
 
 const Foods = ({ history }) => (
