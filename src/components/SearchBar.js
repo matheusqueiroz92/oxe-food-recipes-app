@@ -9,55 +9,49 @@ function SearchBar() {
   const [searchBar, setSearchBar] = useState('');
   const [radioButtons, setRadioButtons] = useState('');
 
-  const handleSearch = ({ target: { value } }) => {
-    setSearchBar(value);
-    console.log(searchBar);
-  };
-
   const redirectIngredient = (ingredient) => {
     const ingredientURL = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`;
     return ingredientURL;
   };
 
   const redirectName = (name) => {
-    const nameURL = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${name}`;
+    const nameURL = `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`;
     return nameURL;
   };
 
   const redirectFirstLetter = (firstLetter) => {
-    const firstLetterURL = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${firstLetter}`;
+    const firstLetterURL = `https://www.themealdb.com/api/json/v1/1/search.php?f=${firstLetter}`;
     return firstLetterURL;
   };
 
   const handleClick = async () => {
+    let searchResults = '';
     if (radioButtons === 'radio-ingredient') {
-      console.log('entrou');
       const response = await fetch(redirectIngredient(searchBar));
-      const ingredientURL = await response.json();
-      return ingredientURL;
+      searchResults = await response.json();
+      console.log(searchResults);
+      return searchResults;
     }
     if (radioButtons === 'radio-name') {
       const response = await fetch(redirectName(searchBar));
-      const nameURL = await response.json();
-      return nameURL;
+      searchResults = await response.json();
+      console.log(searchResults);
+      return searchResults;
     }
     if (radioButtons === 'radio-firstletter') {
       if (searchBar.length > 1) {
-        global.alert('Your search must have only 1 (one) character');
+        searchResults = global.alert('Your search must have only 1 (one) character');
       }
       const response = await fetch(redirectFirstLetter(searchBar));
-      const firstLetter = await response.json();
-      return firstLetter;
+      searchResults = await response.json();
+      console.log(searchResults);
+      return searchResults;
     }
+    setSearchRecipes(searchResults);
   };
 
   return (
     <section>
-      <img
-        alt="search"
-        data-testid="search-top-btn"
-      />
-
       <label htmlFor="searchBar">
         <input
           type="text"
@@ -65,7 +59,6 @@ function SearchBar() {
           value={ searchBar }
           onChange={ ({ target }) => {
             setSearchBar(target.value);
-            console.log(searchBar);
           } }
           id="searchBar"
         />
@@ -81,7 +74,6 @@ function SearchBar() {
             value="radio-ingredient"
             onClick={ ({ target }) => {
               setRadioButtons(target.value);
-              console.log(radioButtons);
             } }
           />
           Ingredient
@@ -94,7 +86,6 @@ function SearchBar() {
             value="radio-name"
             onClick={ ({ target }) => {
               setRadioButtons(target.value);
-              console.log(radioButtons);
             } }
           />
           Name
@@ -107,7 +98,6 @@ function SearchBar() {
             value="radio-firstletter"
             onClick={ ({ target }) => {
               setRadioButtons(target.value);
-              console.log(radioButtons);
             } }
           />
           First letter
