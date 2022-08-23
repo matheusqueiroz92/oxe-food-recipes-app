@@ -3,7 +3,7 @@ import Header from '../components/Header';
 
 const Foods = () => (
   <div>
-    <Header />
+    <Header title="Foods" />
     <h1>FOODS</h1>
   </div>
 );
