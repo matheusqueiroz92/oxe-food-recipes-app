@@ -1,9 +1,13 @@
 body {
+  box-sizing: border-box;
   height: 640px;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
   width: 360px;
 }
 
-.meals {
+/* .meals {
   align-items: center;
   background: #0fa36b;
   color: #464646;
@@ -74,3 +78,4 @@ body {
 }
 
 */
+
