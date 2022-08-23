@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch } from 'react-router-dom';
 import Login from './pages/Login';
 import Foods from './pages/Foods';
+
 import Drinks from './pages/Drinks';
 import FoodRecipe from './pages/FoodRecipe';
 import DrinkRecipe from './pages/DrinkRecipe';
@@ -17,6 +18,7 @@ function App() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
+      <Route exact path="/foods" component={ Foods } />
       <Route exact path="/foods" component={ Foods } />
       <Route exact path="/drinks" component={ Drinks } />
       <Route exact path="/foods/{id-da-receita}" component={ FoodRecipe } />
