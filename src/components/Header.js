@@ -1,14 +1,17 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import ProfileIcon from '../images/profileIcon.svg';
 import SearchIcon from '../images/searchIcon.svg';
+import SearchBar from './SearchBar';
 
 const Header = ({ title, profile, search, history }) => {
+  const [isToggle, setToggle] = useState(false);
   const redirectToProfile = () => {
     history.push('/profile');
   };
   return (
     <div>
+
       <h1 data-testid="page-title">{title}</h1>
       {
         profile && <input
@@ -24,9 +27,11 @@ const Header = ({ title, profile, search, history }) => {
         type="image"
         src={ SearchIcon }
         data-testid="search-top-btn"
-        onClick={ redirectToProfile }
+        onClick={ () => setToggle(!isToggle) }
       />}
+      { isToggle && <SearchBar />}
     </div>
+
   );
 };
 
