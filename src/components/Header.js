@@ -27,7 +27,7 @@ const Header = ({ title, profile, search, history }) => {
         type="image"
         src={ SearchIcon }
         data-testid="search-top-btn"
-        onClick={ () => setToggle(!isToggle)}
+        onClick={ () => setToggle(!isToggle) }
       />}
       { isToggle && <SearchBar />}
     </div>
