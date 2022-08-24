@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
   const [searchRecipes, setSearchRecipes] = useState({ init: 0 });
   const { Provider } = RecipesContext;
-  
   const object = {
     searchRecipes,
     setSearchRecipes,

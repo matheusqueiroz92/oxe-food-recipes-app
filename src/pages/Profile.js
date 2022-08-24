@@ -4,13 +4,14 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 function Profile() {
-  const { email } = JSON.parse(localStorage.getItem('user'));
+  const email = localStorage.getItem('user');
 
   const history = useHistory();
 
   function handleClick() {
     localStorage.clear();
     history.push('/');
+    console.log(email);
   }
   return (
     <div>
