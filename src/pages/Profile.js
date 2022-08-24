@@ -11,7 +11,6 @@ function Profile() {
   function handleClick() {
     localStorage.clear();
     history.push('/');
-    console.log(email);
   }
   return (
     <div>
