@@ -9,7 +9,7 @@ function SearchBar() {
   const [searchBar, setSearchBar] = useState('');
   const [radioButtons, setRadioButtons] = useState('');
 
-  const handleClick = async (text, radio) => {
+  const getMealApi = async (text, radio) => {
     let endpoint = '';
     if (radio === 'radio-ingredient') {
       endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${text}`;
@@ -21,7 +21,28 @@ function SearchBar() {
       if (radio.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       }
-      endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${text}`;
+      endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${text[0]}`;
+    }
+    const response = await fetch(endpoint);
+    console.log(endpoint);
+    const data = await response.json();
+    console.log(data);
+    setSearchRecipes(data);
+  };
+
+  const getDrinkApi = async (text, radio) => {
+    let endpoint = '';
+    if (radio === 'radio-ingredient') {
+      endpoint = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${text}`;
+    }
+    if (radio === 'radio-name') {
+      endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?s=${text}`;
+    }
+    if (radio === 'radio-firstletter') {
+      if (radio.length > 1) {
+        global.alert('Your search must have only 1 (one) character');
+      }
+      endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${text[0]}`;
     }
     const response = await fetch(endpoint);
     const data = await response.json();
@@ -86,7 +107,14 @@ function SearchBar() {
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={ () => handleClick(searchBar, radioButtons) }
+        onClick={ () => {
+          if (pathname === '/foods') {
+            getMealApi(searchBar, radioButtons);
+          }
+          if (pathname === '/drinks') {
+            getDrinkApi(searchBar, radioButtons);
+          }
+        } }
       >
         Search
       </button>
