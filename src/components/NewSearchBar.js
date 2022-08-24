@@ -11,23 +11,17 @@ function SearchBar() {
 
   const handleClick = async (text, radio) => {
     let endpoint = '';
+    const searchResults = '';
     if (radio === 'radio-ingredient') {
       endpoint = `https://www.themealdb.com/api/json/v1/1/filter.php?i=${text}`;
     }
-    if (radio === 'radio-name') {
-      endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?s=${text}`;
-    }
-    if (radio === 'radio-firstletter') {
-      if (radio.length > 1) {
-        global.alert('Your search must have only 1 (one) character');
-      }
-      endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${text}`;
-    }
-    const response = await fetch(endpoint);
-    const data = await response.json();
-    console.log(data);
-    setSearchRecipes(data);
   };
+  if (radio === 'radio-name') {
+    endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?s=${text}`;
+  }
+  if (radio === 'radio-firstletter') {
+    endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${text}`;
+  }
 
   return (
     <section>
@@ -86,7 +80,7 @@ function SearchBar() {
       <button
         type="button"
         data-testid="exec-search-btn"
-        onClick={ () => handleClick(searchBar, radioButtons) }
+        onClick={ () => handleClick() }
       >
         Search
       </button>
