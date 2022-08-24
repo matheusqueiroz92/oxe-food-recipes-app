@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import './login.css';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
+import RecipeDetails from '../components/RecipeDetails';
 
 function Login({ history }) {
   const { login, setLogin, toogleButton } = useContext(RecipesContext);
@@ -27,6 +28,7 @@ function Login({ history }) {
   return (
     <div className="form-login">
       <h1>LOGIN</h1>
+      <RecipeDetails />
       <form>
         <label htmlFor="email-input">
           Email:
