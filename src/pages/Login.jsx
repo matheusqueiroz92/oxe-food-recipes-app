@@ -1,28 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
 import './login.css';
 import PropTypes from 'prop-types';
+import RecipesContext from '../context/RecipesContext';
 
 function Login({ history }) {
-  const [login, setLogin] = useState({
-    email: '',
-    password: '',
-  });
-
-  const [toogleButton, setToogleButton] = useState(true);
-
-  useEffect(() => {
-    const validateInputs = () => {
-      const { email, password } = login;
-      const SEVEN = 7;
-      const MENOS_UM = -1;
-      if ((email.search(/\S+@\S+\.\S+/) !== MENOS_UM) && password.length >= SEVEN) {
-        setToogleButton(false);
-      } else {
-        setToogleButton(true);
-      }
-    };
-    validateInputs();
-  }, [login]);
+  const { login, setLogin, toogleButton } = useContext(RecipesContext);
 
   const handleLogin = ({ target }) => {
     const { name, value } = target;
@@ -73,7 +55,7 @@ function Login({ history }) {
         <button
           className="button-login"
           type="button"
-          name="buttonLogin"
+          id="buttonLogin"
           data-testid="login-submit-btn"
           disabled={ toogleButton }
           onClick={ handleClick }

@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route, Switch } from 'react-router-dom';
+import RecipesProvider from './context/RecipesProvider';
 import Login from './pages/Login';
 import Foods from './pages/Foods';
 import RecipesProvider from './context/RecipesProvider';
@@ -39,7 +40,6 @@ function App() {
         <Route path="/favorite-recipes" component={ FavoriteRecipes } />
       </Switch>
     </RecipesProvider>
-
   );
 }
 
