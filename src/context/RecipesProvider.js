@@ -39,6 +39,8 @@ function RecipesProvider({ children }) {
         setLogin,
         toogleButton,
         setToogleButton,
+        searchRecipes,
+        setSearchRecipes,
       } }
     >
       { children }
