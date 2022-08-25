@@ -9,6 +9,12 @@ function SearchBar() {
   const [searchBar, setSearchBar] = useState('');
   const [radioButtons, setRadioButtons] = useState('');
 
+  // useEffect(() => {
+  //   if (searchRecipes.drinks.length < 1) {
+  //     global.alert('Sorry, we haven\'t found any recipes for these filters.');
+  //   }
+  // }, []);
+
   const getMealApi = async (text, radio) => {
     let endpoint = '';
     if (radio === 'radio-ingredient') {
@@ -24,10 +30,12 @@ function SearchBar() {
       endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${text[0]}`;
     }
     const response = await fetch(endpoint);
-    console.log(endpoint);
     const data = await response.json();
-    console.log(data);
-    setSearchRecipes(data);
+    const { meals } = data;
+    setSearchRecipes((prevMeals) => ({
+      ...prevMeals,
+      meals,
+    }));
   };
 
   const getDrinkApi = async (text, radio) => {
@@ -46,8 +54,14 @@ function SearchBar() {
     }
     const response = await fetch(endpoint);
     const data = await response.json();
-    console.log(data);
-    setSearchRecipes(data);
+    const { drinks } = data;
+    setSearchRecipes((prevDrinks) => ({
+      ...prevDrinks,
+      drinks,
+    }));
+    // if (drinks.length < 1) {
+    //   global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    // }
   };
 
   return (
@@ -110,9 +124,15 @@ function SearchBar() {
         onClick={ () => {
           if (pathname === '/foods') {
             getMealApi(searchBar, radioButtons);
+            // if (searchRecipes.meals.length < 1) {
+            //   global.alert('Sorry, we haven\'t found any recipes for these filters.');
+            // }
           }
           if (pathname === '/drinks') {
             getDrinkApi(searchBar, radioButtons);
+            // if (searchRecipes.drinks.length < 1) {
+            //   global.alert('Sorry, we haven\'t found any recipes for these filters.');
+            // }
           }
         } }
       >
