@@ -9,6 +9,8 @@ function SearchBar() {
   const [searchBar, setSearchBar] = useState('');
   const [radioButtons, setRadioButtons] = useState('');
 
+  const alertNotFound = 'Sorry, we haven\'t found any recipes for these filters.';
+
   const getMealApi = async (text, radio) => {
     let endpoint = '';
     if (radio === 'radio-ingredient') {
@@ -23,11 +25,16 @@ function SearchBar() {
       }
       endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${text[0]}`;
     }
-    const response = await fetch(endpoint);
-    console.log(endpoint);
-    const data = await response.json();
-    console.log(data);
-    setSearchRecipes(data);
+    try {
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      if (data.meals === null) {
+        throw new Error(alertNotFound);
+      }
+      return setSearchRecipes(data);
+    } catch (error) {
+      global.alert(error.message);
+    }
   };
 
   const getDrinkApi = async (text, radio) => {
@@ -44,10 +51,16 @@ function SearchBar() {
       }
       endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${text[0]}`;
     }
-    const response = await fetch(endpoint);
-    const data = await response.json();
-    console.log(data);
-    setSearchRecipes(data);
+    try {
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      if (data.drinks === null) {
+        throw new Error(alertNotFound);
+      }
+      return setSearchRecipes(data);
+    } catch (error) {
+      global.alert(error.message);
+    }
   };
 
   return (
