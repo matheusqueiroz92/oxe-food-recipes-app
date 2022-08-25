@@ -9,11 +9,7 @@ function SearchBar() {
   const [searchBar, setSearchBar] = useState('');
   const [radioButtons, setRadioButtons] = useState('');
 
-  // useEffect(() => {
-  //   if (searchRecipes.drinks.length < 1) {
-  //     global.alert('Sorry, we haven\'t found any recipes for these filters.');
-  //   }
-  // }, []);
+  const alertNotFound = 'Sorry, we haven\'t found any recipes for these filters.';
 
   const getMealApi = async (text, radio) => {
     let endpoint = '';
@@ -29,13 +25,16 @@ function SearchBar() {
       }
       endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${text[0]}`;
     }
-    const response = await fetch(endpoint);
-    const data = await response.json();
-    const { meals } = data;
-    setSearchRecipes((prevMeals) => ({
-      ...prevMeals,
-      meals,
-    }));
+    try {
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      if (data.meals === null) {
+        throw new Error(alertNotFound);
+      }
+      return setSearchRecipes(data);
+    } catch (error) {
+      global.alert(error.message);
+    }
   };
 
   const getDrinkApi = async (text, radio) => {
@@ -52,16 +51,16 @@ function SearchBar() {
       }
       endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${text[0]}`;
     }
-    const response = await fetch(endpoint);
-    const data = await response.json();
-    const { drinks } = data;
-    setSearchRecipes((prevDrinks) => ({
-      ...prevDrinks,
-      drinks,
-    }));
-    // if (drinks.length < 1) {
-    //   global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    // }
+    try {
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      if (data.drinks === null) {
+        throw new Error(alertNotFound);
+      }
+      return setSearchRecipes(data);
+    } catch (error) {
+      global.alert(error.message);
+    }
   };
 
   return (
@@ -124,15 +123,9 @@ function SearchBar() {
         onClick={ () => {
           if (pathname === '/foods') {
             getMealApi(searchBar, radioButtons);
-            // if (searchRecipes.meals.length < 1) {
-            //   global.alert('Sorry, we haven\'t found any recipes for these filters.');
-            // }
           }
           if (pathname === '/drinks') {
             getDrinkApi(searchBar, radioButtons);
-            // if (searchRecipes.drinks.length < 1) {
-            //   global.alert('Sorry, we haven\'t found any recipes for these filters.');
-            // }
           }
         } }
       >
