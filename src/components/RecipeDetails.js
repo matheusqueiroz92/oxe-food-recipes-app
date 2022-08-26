@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
-const RecipeDetails = () => {
+const RecipeDetails = ({ history }) => {
   const [details, setDetails] = useState();
+  const id = useParams();
+  // console.log(id);
+  console.log(details);
 
   useEffect(() => {
     const getDetails = async () => {
@@ -11,7 +15,6 @@ const RecipeDetails = () => {
       const data = await response.json();
       setDetails(data.meals[0]);
     };
-
     getDetails();
   }, []);
 
@@ -22,6 +25,19 @@ const RecipeDetails = () => {
       .reduce((obj, key) => Object.assign(obj, {
         [key]: details[key],
       }), {});
+
+    // Fonte da funcao youtubeParser https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
+    // const youtubeParser = (url) => {
+    //   const ELEVEN = 11;
+    //   const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+    //   const match = url.match(regExp);
+    //   return (match && match[7].length === ELEVEN) ? match[7] : false;
+    // };
+
+    // const renderVideo = (url) => {
+    //   const videoId = youtubeParser(url);
+    //   return `https://www.youtube.com/embed/${videoId}`;
+    // };
 
     return (
       <div>
@@ -41,6 +57,14 @@ const RecipeDetails = () => {
             } return true;
           }) }
         <p data-testid="recipe-category">{ details.strCategory }</p>
+        <p data-testid="instructions">{ details.strInstructions }</p>
+        <iframe
+          title="Recipe Video"
+          width="420"
+          height="315"
+          data-testid="video"
+          // src={ renderVideo(details.strYoutube) }
+        />
       </div>
     );
   };
