@@ -8,12 +8,6 @@ function Foods({ history }) {
   const { searchRecipes } = useContext(RecipesContext);
   const DOZE = 12;
 
-  // useEffect(() => {
-  //   if (searchRecipes.meals.length < 1) {
-  //     global.alert('Sorry, we haven\'t found any recipes for these filters.');
-  //   }
-  // }, []);
-
   return (
     <div>
       <div>
