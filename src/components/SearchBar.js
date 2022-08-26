@@ -27,7 +27,7 @@ function SearchBar() {
       const response = await fetch(endpoint);
       const data = await response.json();
       if (data.meals === null) {
-        throw new Error(alertNotFound);
+        throw new Error('Sorry, we haven\'t found any recipes for these filters.');
       }
       return setSearchRecipes(data);
     } catch (error) {
@@ -47,17 +47,16 @@ function SearchBar() {
       if (radio.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       }
-      endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${text[0]}`;
-    }
-    try {
-      const response = await fetch(endpoint);
-      const data = await response.json();
-      if (data.drinks === null) {
-        throw new Error(alertNotFound);
+      try {
+        const response = await fetch(endpoint);
+        const data = await response.json();
+        if (data.drinks === null) {
+          throw new Error('Sorry, we haven\'t found any recipes for these filters.');
+        }
+        return setSearchRecipes(data);
+      } catch (error) {
+        global.alert(error.message);
       }
-      return setSearchRecipes(data);
-    } catch (error) {
-      global.alert(error.message);
     }
   };
 
