@@ -47,8 +47,8 @@ function SearchBar() {
       if (radio.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       }
-      endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${text[0]}`;
-    }
+      endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${text[0]}`
+    };
     try {
       const response = await fetch(endpoint);
       const data = await response.json();

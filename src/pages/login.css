@@ -1,8 +1,18 @@
 .form-login {
-  background-color: rgb(157, 158, 250);
+  background-color: rgba(255, 186, 38, 0.863);
   height: 640px;
   text-align: center;
-  width: 360px;
+  font-weight: 800;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.title-login {
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+}
+
+.container {
+  padding-top: 150px;
+  font-family:Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
 .input-login {
