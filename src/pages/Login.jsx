@@ -26,44 +26,46 @@ function Login({ history }) {
 
   return (
     <div className="form-login">
-      <h1>LOGIN</h1>
-      <form>
-        <label htmlFor="email-input">
-          Email:
-          <input
-            className="input-login"
-            id="email-input"
-            type="email"
-            name="email"
-            value={ email }
-            onChange={ handleLogin }
-            data-testid="email-input"
-          />
-        </label>
-        <label htmlFor="password-input">
-          Password:
-          <input
-            className="input-login"
-            id="password-input"
-            type="password"
-            name="password"
-            value={ password }
-            onChange={ handleLogin }
-            data-testid="password-input"
-          />
-        </label>
-        <button
-          className="button-login"
-          type="button"
-          id="buttonLogin"
-          data-testid="login-submit-btn"
-          disabled={ toogleButton }
-          onClick={ handleClick }
-        >
-          Enter
+      <div className="container">
+        <h1 className="title-login">LOGIN</h1>
+        <form>
+          <label htmlFor="email-input">
+            Email:
+            <input
+              className="input-login"
+              id="email-input"
+              type="email"
+              name="email"
+              value={ email }
+              onChange={ handleLogin }
+              data-testid="email-input"
+            />
+          </label>
+          <label htmlFor="password-input">
+            Password:
+            <input
+              className="input-login"
+              id="password-input"
+              type="password"
+              name="password"
+              value={ password }
+              onChange={ handleLogin }
+              data-testid="password-input"
+            />
+          </label>
+          <button
+            className="button-login"
+            type="button"
+            id="buttonLogin"
+            data-testid="login-submit-btn"
+            disabled={ toogleButton }
+            onClick={ handleClick }
+          >
+            Enter
 
-        </button>
-      </form>
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
