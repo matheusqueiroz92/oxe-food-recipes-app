@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Recipes from '../components/Recipes';
 import RecipesContext from '../context/RecipesContext';
 
 function Foods({ history }) {
@@ -19,11 +20,14 @@ function Foods({ history }) {
       <div>
         <Header title="Foods" profile search history={ history } />
       </div>
-      <div><Footer /></div>
+      <div>
+        { searchRecipes.meals.length < 1 ? <Recipes />
+          : <p /> }
+      </div>
       { searchRecipes.meals.length === 1
         ? history.push(`/foods/${searchRecipes.meals[0].idMeal}`)
         : (
-          <div>
+          <div className="search-recipes">
             { searchRecipes.meals.length > 1 ? searchRecipes.meals
               .map((recipe, index) => (
                 <div
@@ -38,6 +42,7 @@ function Foods({ history }) {
                     {recipe.strMeal}
                   </p>
                   <img
+                    className="recipe-img"
                     key={ index }
                     src={ recipe.strMealThumb }
                     alt={ recipe.strMeal }
@@ -47,6 +52,7 @@ function Foods({ history }) {
               )).filter((element, idx) => idx < DOZE)
               : <p /> }
           </div>)}
+      <div><Footer /></div>
     </div>
   );
 }

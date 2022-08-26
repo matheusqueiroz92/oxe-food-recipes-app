@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Recipes from '../components/Recipes';
 import RecipesContext from '../context/RecipesContext';
 
 function Drinks({ history }) {
@@ -19,7 +20,10 @@ function Drinks({ history }) {
       <div>
         <Header title="Drinks" profile search history={ history } />
       </div>
-      <div><Footer /></div>
+      <div>
+        { searchRecipes.meals.length < 1 ? <Recipes />
+          : <p /> }
+      </div>
       { searchRecipes.drinks.length === 1
         ? history.push(`/drinks/${searchRecipes.drinks[0].idDrink}`)
         : (
@@ -38,6 +42,7 @@ function Drinks({ history }) {
                     {recipe.strDrink}
                   </p>
                   <img
+                    className="recipe-img"
                     key={ index }
                     src={ recipe.strDrinkThumb }
                     alt={ recipe.strDrink }
@@ -47,6 +52,7 @@ function Drinks({ history }) {
               )).filter((element, idx) => idx < DOZE)
               : <p /> }
           </div>) }
+      <div><Footer /></div>
     </div>
   );
 }

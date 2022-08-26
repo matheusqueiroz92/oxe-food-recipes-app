@@ -9,12 +9,6 @@ function SearchBar() {
   const [searchBar, setSearchBar] = useState('');
   const [radioButtons, setRadioButtons] = useState('');
 
-  // useEffect(() => {
-  //   if (searchRecipes.drinks.length < 1) {
-  //     global.alert('Sorry, we haven\'t found any recipes for these filters.');
-  //   }
-  // }, []);
-
   const getMealApi = async (text, radio) => {
     let endpoint = '';
     if (radio === 'radio-ingredient') {
@@ -59,10 +53,13 @@ function SearchBar() {
       ...prevDrinks,
       drinks,
     }));
-    // if (drinks.length < 1) {
-    //   global.alert('Sorry, we haven\'t found any recipes for these filters.');
-    // }
   };
+
+  // useEffect(() => {
+  //   if (searchRecipes.drinks.length < 1) {
+  //     global.alert('Sorry, we haven\'t found any recipes for these filters.');
+  //   }
+  // }, [getMealApi, getDrinkApi]);
 
   return (
     <section>
