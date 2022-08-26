@@ -31,18 +31,16 @@ function RecipesProvider({ children }) {
     validateInputs();
   }, [login]);
 
-  const object = {
-    searchRecipes,
-    setSearchRecipes,
-    login,
-    setLogin,
-    toogleButton,
-    setToogleButton,
-  };
-
   return (
     <Provider
-      value={ object }
+      value={ {
+        login,
+        setLogin,
+        toogleButton,
+        setToogleButton,
+        searchRecipes,
+        setSearchRecipes,
+      } }
     >
       { children }
     </Provider>
