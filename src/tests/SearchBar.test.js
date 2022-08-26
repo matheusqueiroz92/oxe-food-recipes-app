@@ -283,6 +283,7 @@ describe('Testando o componente SearchBar', () => {
         })
 
         //oi
+        //oi
 })
 })
 
