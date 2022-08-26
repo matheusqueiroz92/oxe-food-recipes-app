@@ -281,6 +281,8 @@ describe('Testando o componente SearchBar', () => {
         await waitFor(() => {
         expect(global.alert).toBeCalledWith('Sorry, we haven\'t found any recipes for these filters.');
         })
+
+        //oi
 })
 })
 
