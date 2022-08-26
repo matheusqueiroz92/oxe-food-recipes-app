@@ -259,5 +259,54 @@ describe('Testando o componente SearchBar', () => {
 
         mock.mockRestore()
     })
+
+    it('Testa o alarme de um caracter', async () => {
+        const { history } = renderWithRouter(<App />);
+        history.push('/drinks');
+
+        global.alert = jest.fn();
+
+        const imgSearch = screen.getByTestId('search-top-btn')
+        userEvent.click(imgSearch);
+
+        const inputSearch = screen.getByTestId('search-input');
+        expect(inputSearch).toBeInTheDocument();
+
+        const btnSearch = screen.getByTestId('exec-search-btn');
+        const selectFirstLetter = screen.getAllByRole("radio")[2];
+        expect(btnSearch).toBeInTheDocument();
+        expect(selectFirstLetter).toBeInTheDocument();
+    
+        userEvent.type(inputSearch, 'cc');
+        userEvent.click(selectFirstLetter);
+        userEvent.click(btnSearch);
+
+        await waitFor(() => {
+        expect(global.alert).toBeCalledWith("Your search must have only 1 (one) character");
+        })
+    })
+
+    it('Testando o alert de not found', async () => {
+        const { history } = renderWithRouter(<App />);
+        history.push('/drinks');
+
+        global.alert = jest.fn();
+
+        const iconSearch = screen.getByTestId('search-top-btn');
+
+        userEvent.click(iconSearch);
+
+        const inputSearch = screen.getByTestId('search-input');      
+        const btnSearch = screen.getByTestId('exec-search-btn');
+        const selectName = screen.getAllByRole("radio")[1];
+
+        userEvent.type(inputSearch, 'Xablau');
+        userEvent.click(selectName);
+        userEvent.click(btnSearch);
+
+        await waitFor(() => {
+        expect(global.alert).toBeCalledWith('Sorry, we haven\'t found any recipes for these filters.');
+        })
+})
 })
 
