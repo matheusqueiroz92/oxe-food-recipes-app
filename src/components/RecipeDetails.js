@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Recommended from './Recommended';
 
 const RecipeDetails = ({ history }) => {
   const [details, setDetails] = useState();
@@ -30,28 +31,32 @@ const RecipeDetails = ({ history }) => {
   }, []);
 
   // Fonte de onde peguei como fazer esse filtro dentro do objeto: https://stackabuse.com/how-to-filter-an-object-by-key-in-javascript/
-  const renderFoodDetails = () => {
-    const filterObject = (filter) => Object.keys(details)
-      .filter((key) => key.includes(filter))
-      .reduce((obj, key) => Object.assign(obj, {
-        [key]: details[key],
-      }), {});
+  const filterObject = (filter) => Object.keys(details)
+    .filter((key) => key.includes(filter))
+    .reduce((obj, key) => Object.assign(obj, {
+      [key]: details[key],
+    }), {});
 
+  const ingridientsAndMeasures = () => {
     const INGREDIENTS = Object.values(filterObject('Ingredient'));
     const MEASURES = Object.values(filterObject('Measure'));
-
-    const ingridientsAndMeasures = () => {
-      const newArr = [];
-      for (let i = 0; i < INGREDIENTS.length; i += 1) {
+    const newArr = [];
+    for (let i = 0; i < INGREDIENTS.length; i += 1) {
+      if (MEASURES[i] && INGREDIENTS[i] !== 'null') {
         newArr.push(`${MEASURES[i]} ${INGREDIENTS[i]}`);
       }
-      return newArr;
-    };
+      if (MEASURES[i] === 'null' && INGREDIENTS[i] !== 'null') {
+        newArr.push(INGREDIENTS[i]);
+      }
+    }
+    return newArr;
+  };
 
+  const renderFoodDetails = () => {
     const renderRecomendations = () => {
       if (isFood) {
-        return (recomendations.drinks.map((e, index) => <p key={ index } data-testid={ `${index}-recomendation-card` }>{e.strDrink}</p>));
-      } return (recomendations.meals.map((e, index) => <p key={ index } data-testid={ `${index}-recomendation-card` }>{e.strMeal}</p>));
+        return (Recommended({ drinks: recomendations.drinks }));
+      } return (Recommended({ meals: recomendations.meals }));
     };
 
     return (
@@ -92,10 +97,6 @@ const RecipeDetails = ({ history }) => {
       </div>
     );
   };
-
-  if (recomendations) {
-    console.log(recomendations.meals);
-  }
 
   return (
     <div>
