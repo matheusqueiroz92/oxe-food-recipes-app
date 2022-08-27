@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Recipes from '../components/Recipes';
 import RecipesContext from '../context/RecipesContext';
 
 function Drinks({ history }) {
@@ -12,6 +13,10 @@ function Drinks({ history }) {
     <div>
       <div>
         <Header title="Drinks" profile search history={ history } />
+      </div>
+      <div>
+        { searchRecipes.drinks.length < 1 ? <Recipes />
+          : <p /> }
       </div>
       { searchRecipes.drinks.length === 1
         ? history.push(`/drinks/${searchRecipes.drinks[0].idDrink}`)
