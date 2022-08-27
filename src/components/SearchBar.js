@@ -23,14 +23,9 @@ function SearchBar() {
       }
       endpoint = `https://www.themealdb.com/api/json/v1/1/search.php?f=${text[0]}`;
     }
-    const response = await fetch(endpoint);
-    const data = await response.json();
-    const { meals } = data;
-    setSearchRecipes((prevMeals) => ({
-      ...prevMeals,
-      meals,
-    }));
     try {
+      const response = await fetch(endpoint);
+      const data = await response.json();
       if (data.meals === null) {
         throw new Error('Sorry, we haven\'t found any recipes for these filters.');
       }
@@ -52,14 +47,9 @@ function SearchBar() {
       if (radio.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       }
-      const response = await fetch(endpoint);
-      const data = await response.json();
-      const { drinks } = data;
-      setSearchRecipes((prevDrinks) => ({
-        ...prevDrinks,
-        drinks,
-      }));
       try {
+        const response = await fetch(endpoint);
+        const data = await response.json();
         if (data.drinks === null) {
           throw new Error('Sorry, we haven\'t found any recipes for these filters.');
         }
