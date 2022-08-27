@@ -6,20 +6,30 @@ const Recommended = ({ drinks, meals }) => {
   if (drinks) {
     return drinks
       .map((e, index) => (
-        <p
-          key={ index }
-          data-testid={ `${index}${TX}` }
-        >
-          {e.strDrink}
-        </p>));
+        <div key={ index }>
+          <h5 data-testid={ `${index}-recomendation-title` }>{e.strDrink}</h5>
+          <img
+            alt="drink recommendation"
+            key={ index }
+            src={ e.strDrinkThumb }
+            data-testid={ `${index}${TX}` }
+            width={ 60 }
+            height={ 60 }
+          />
+        </div>));
   } return meals
     .map((e, index) => (
-      <p
-        key={ index }
-        data-testid={ `${index}${TX}` }
-      >
-        {e.strMeal}
-      </p>));
+      <div key={ index }>
+        <h5 data-testid={ `${index}-recomendation-title` }>{e.strMeal}</h5>
+        <img
+          alt="food recommendation"
+          key={ index }
+          data-testid={ `${index}${TX}` }
+          src={ e.strMealThumb }
+          width={ 60 }
+          height={ 60 }
+        />
+      </div>));
 };
 
 export default Recommended;

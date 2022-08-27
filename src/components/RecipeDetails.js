@@ -53,10 +53,13 @@ const RecipeDetails = ({ history }) => {
   };
 
   const renderFoodDetails = () => {
+    const RECOMMENDED_QUANTITY = 6;
     const renderRecomendations = () => {
       if (isFood) {
-        return (Recommended({ drinks: recomendations.drinks }));
-      } return (Recommended({ meals: recomendations.meals }));
+        return (Recommended({
+          drinks: recomendations.drinks.splice(0, RECOMMENDED_QUANTITY) }));
+      } return (Recommended({
+        meals: recomendations.meals.splice(0, RECOMMENDED_QUANTITY) }));
     };
 
     return (
