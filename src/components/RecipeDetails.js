@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -10,11 +11,11 @@ const RecipeDetails = ({ history }) => {
 
   useEffect(() => {
     const getDetails = async () => {
-      // const TEST_RECIPE = '52997';
+      // const TEST_RECIPE_ID = '52997';
       const URL = `https://www.the${isFood ? 'meal' : 'cocktail'}db.com/api/json/v1/1/lookup.php?i=${id.id}`;
       const response = await fetch(URL);
       const data = await response.json();
-      setDetails(data.meals[0]);
+      setDetails(isFood ? data.meals[0] : data.drinks[0]);
     };
 
     const getRecomendations = async () => {
@@ -29,7 +30,7 @@ const RecipeDetails = ({ history }) => {
   }, []);
 
   // Fonte de onde peguei como fazer esse filtro dentro do objeto: https://stackabuse.com/how-to-filter-an-object-by-key-in-javascript/
-  const renderDetails = () => {
+  const renderFoodDetails = () => {
     const filterObject = (filter) => Object.keys(details)
       .filter((key) => key.includes(filter))
       .reduce((obj, key) => Object.assign(obj, {
@@ -38,7 +39,6 @@ const RecipeDetails = ({ history }) => {
 
     const INGREDIENTS = Object.values(filterObject('Ingredient'));
     const MEASURES = Object.values(filterObject('Measure'));
-    console.log(INGREDIENTS, MEASURES);
 
     const ingridientsAndMeasures = () => {
       const newArr = [];
@@ -48,30 +48,25 @@ const RecipeDetails = ({ history }) => {
       return newArr;
     };
 
-    console.log(ingridientsAndMeasures());
-
-    // Fonte da funcao youtubeParser https://stackoverflow.com/questions/3452546/how-do-i-get-the-youtube-video-id-from-a-url
-    // const youtubeParser = (url) => {
-    //   const ELEVEN = 11;
-    //   const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-    //   const match = url.match(regExp);
-    //   return (match && match[7].length === ELEVEN) ? match[7] : false;
-    // };
-
-    // const renderVideo = (url) => {
-    //   const videoId = youtubeParser(url);
-    //   return `https://www.youtube.com/embed/${videoId}`;
-    // };
+    const renderRecomendations = () => {
+      if (isFood) {
+        return (recomendations.drinks.map((e, index) => <p key={ index } data-testid={ `${index}-recomendation-card` }>{e.strDrink}</p>));
+      } return (recomendations.meals.map((e, index) => <p key={ index } data-testid={ `${index}-recomendation-card` }>{e.strMeal}</p>));
+    };
 
     return (
       <div>
-        <h2 data-testid="recipe-title">{ details.strMeal }</h2>
-        { <img
-          alt="meal"
-          src={ details.strMealThumb }
+        <h2 data-testid="recipe-title">
+          {
+            isFood ? details.strMeal : details.strDrink
+          }
+        </h2>
+        <img
+          alt="recipe"
+          src={ isFood ? details.strMealThumb : details.strDrinkThumb }
           data-testid="recipe-photo"
           style={ { width: 200, height: 200 } }
-        />}
+        />
         { ingridientsAndMeasures()
           .map((ingredient, index) => {
             const testid = `${index}-ingredient-name-and-measure`;
@@ -79,7 +74,12 @@ const RecipeDetails = ({ history }) => {
               return (<p key={ index } data-testid={ testid }>{ingredient}</p>);
             } return true;
           }) }
-        <p data-testid="recipe-category">{ details.strCategory }</p>
+        <p
+          data-testid="recipe-category"
+        >
+          { isFood ? details.strCategory : details.strAlcoholic }
+
+        </p>
         <p data-testid="instructions">{ details.strInstructions }</p>
         { isFood && <iframe
           title="Recipe Video"
@@ -88,16 +88,28 @@ const RecipeDetails = ({ history }) => {
           data-testid="video"
           src={ details.strYoutube }
         />}
-        { recomendations && recomendations.drinks.map((e, index) => <p key={index} data-testid={`${index}-recomendation-card`}>{e.strDrink}</p>) }
+        { recomendations && renderRecomendations() }
       </div>
     );
   };
 
+  if (recomendations) {
+    console.log(recomendations.meals);
+  }
+
   return (
     <div>
-      { details && renderDetails() }
+      { details && renderFoodDetails() }
     </div>
   );
+};
+
+RecipeDetails.propTypes = {
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 export default RecipeDetails;
