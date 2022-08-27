@@ -9,8 +9,6 @@ function SearchBar() {
   const [searchBar, setSearchBar] = useState('');
   const [radioButtons, setRadioButtons] = useState('');
 
-  const alertNotFound = 'Sorry, we haven\'t found any recipes for these filters.';
-  
   const getMealApi = async (text, radio) => {
     let endpoint = '';
     if (radio === 'radio-ingredient') {
@@ -29,8 +27,13 @@ function SearchBar() {
       const response = await fetch(endpoint);
       const data = await response.json();
       if (data.meals === null) {
-        throw new Error(alertNotFound);
+        throw new Error('Sorry, we haven\'t found any recipes for these filters.');
       }
+      const { meals } = data;
+      setSearchRecipes((prevMeals) => ({
+        ...prevMeals,
+        meals,
+      }));
       return setSearchRecipes(data);
     } catch (error) {
       global.alert(error.message);
@@ -49,32 +52,24 @@ function SearchBar() {
       if (radio.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       }
-      endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${text[0]}`;
+      endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${text}`;
     }
-    const response = await fetch(endpoint);
-    const data = await response.json();
-    const { drinks } = data;
-    setSearchRecipes((prevDrinks) => ({
-      ...prevDrinks,
-      drinks,
-    }));
     try {
       const response = await fetch(endpoint);
       const data = await response.json();
       if (data.drinks === null) {
-        throw new Error(alertNotFound);
+        throw new Error('Sorry, we haven\'t found any recipes for these filters.');
       }
+      const { drinks } = data;
+      setSearchRecipes((prevDrinks) => ({
+        ...prevDrinks,
+        drinks,
+      }));
       return setSearchRecipes(data);
     } catch (error) {
       global.alert(error.message);
     }
   };
-
-  // useEffect(() => {
-  //   if (searchRecipes.drinks.length < 1) {
-  //     global.alert('Sorry, we haven\'t found any recipes for these filters.');
-  //   }
-  // }, [getMealApi, getDrinkApi]);
 
   return (
     <section>
