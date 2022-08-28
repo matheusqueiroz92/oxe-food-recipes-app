@@ -5,14 +5,13 @@
   width: 360px;
 }
 
-.recipe-img{
-  max-height:150px;
-  max-width:200px;
+.recipe-img {
   height: auto;
+  max-height: 150px;
+  max-width: 200px;
   width: auto;
 }
 
 .card-recipe {
   border: 1px solid black;
-  
 }
