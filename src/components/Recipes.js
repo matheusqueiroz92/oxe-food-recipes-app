@@ -106,7 +106,7 @@ function Recipes() {
       >
         All
       </button>
-      <div>
+      <div data-testid="categoryFoods">
         { pathname === '/foods' ? categories.meals.map((category, index) => (
           <button
             type="button"
@@ -128,7 +128,7 @@ function Recipes() {
               { category.strCategory }
             </button>)).filter((element, idx) => idx < FIVE) }
       </div>
-      <div className="searchRecipes">
+      <div className="searchRecipes" data-testid="cardsRecipes">
         { pathname === '/foods' ? (recipes.map((recipe, index) => (
           <Link
             to={ `/foods/${recipe.idMeal}` }

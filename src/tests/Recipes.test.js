@@ -3,212 +3,161 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from "./renderWithRouter";
-import chickenMeals from '../../cypress/mocks/chickenMeals';
+
 import meals from '../../cypress/mocks/meals';
 import drinks from '../../cypress/mocks/drinks';
 
 describe('Testando o componente Recipes', () => {
-    it('Testa se muda para a rota /foods', async () => {
+    it('Testa se o usuário é redirecionado para a rota foods caso a receita seja comida', async () => {
         const { history } = renderWithRouter(<App />);
-        history.push('/');
-        
-        const emailLogin = screen.getByRole("textbox", { name: /email:/i });
-        const passwordLogin = screen.getByLabelText("Password:");
-        const btnLogin = screen.getByRole("button", { name: /enter/i });
+        history.push('/foods')
 
-        expect(btnLogin).toBeDisabled();
+        const foodCorba = await screen.findByText('Corba');
+        expect(foodCorba).toBeInTheDocument();
 
-        userEvent.type(emailLogin, 'trybe@trybe.com');
-        userEvent.type(passwordLogin, '1234567');
-        expect(btnLogin).not.toBeDisabled();
+        const foodsCards = screen.getByTestId('cardsRecipes');
+        expect(foodsCards.childNodes.length).toBe(12);
 
-        userEvent.click(btnLogin);
-        expect(history.location.pathname).toBe('/foods');
+        userEvent.click(foodCorba);
+        expect(history.location.pathname).toBe('/foods/52977');
     })
 
-    it('Testa se ao selecionar o radio Ingrediente, a busca na API é feita corretamente na página de comidas', async () => {
+    it('Testa se o usuário é redirecionado para a rota drinks caso a receita seja bebida', async () => {
+        const { history } = renderWithRouter(<App />);
+        history.push('/drinks')
+
+        const drinkGG = await screen.findByText('GG');
+        expect(drinkGG).toBeInTheDocument();
+
+        const foodsCards = screen.getByTestId('cardsRecipes');
+        expect(foodsCards.childNodes.length).toBe(12);
+
+        userEvent.click(drinkGG);
+        expect(history.location.pathname).toBe('/drinks/15997');
+    })
+
+    it('Testando o botão de categoria Beef', async () => {
         const { history } = renderWithRouter(<App />);
         history.push('/foods');
-
-        const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-            json: () => Promise.resolve(chickenMeals),
-        }))
         
-        const imgSearch = screen.getByTestId('search-top-btn');
-        userEvent.click(imgSearch);
-
-        const inputSearch = screen.getByTestId('search-input');
-        expect(inputSearch).toBeInTheDocument();
-
-        const btnSearch = screen.getByTestId('exec-search-btn');
-        const selectIngredient = screen.getAllByRole("radio")[0];
-        expect(btnSearch).toBeInTheDocument();
-        expect(selectIngredient).toBeInTheDocument();
-
-        userEvent.type(inputSearch, 'Chicken');
-        userEvent.click(selectIngredient);
-        userEvent.click(btnSearch);
-
-        expect(history.location.pathname).toBe('/foods');
-        await waitFor(() => expect(global.fetch).toHaveBeenCalled());
         await waitFor(() => {
-            expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=Chicken');
+        const btnBeef = screen.getByTestId('Beef-category-filter');
+        expect(btnBeef).toBeDefined();
+        userEvent.click(btnBeef);
         })
-        mock.mockRestore()
-    });
+    })  
 
-    it('Testa se ao selecionar o radio Nome, a busca na API é feita corretamente na página de comidas', async () => {
+    it('Testando o botão de categoria Breakfast', async () => {
         const { history } = renderWithRouter(<App />);
-        history.push('/foods')
-
-        const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-            json: () => Promise.resolve(meals),
-        }))
-
-        const imgSearch = screen.getByTestId('search-top-btn');
-        userEvent.click(imgSearch);
-
-        const inputSearch = screen.getByTestId('search-input');
-        expect(inputSearch).toBeInTheDocument();
-
-        const btnSearch = screen.getByTestId('exec-search-btn');
-        const selectName = screen.getAllByRole("radio")[1];
-        expect(btnSearch).toBeInTheDocument();
-        expect(selectName).toBeInTheDocument();
-
-        userEvent.type(inputSearch, 'Chicken');
-        userEvent.click(selectName);
-        userEvent.click(btnSearch);
-
-        expect(history.location.pathname).toBe('/foods');
-        await waitFor(() => expect(global.fetch).toHaveBeenCalled());
+        history.push('/foods');
+        
         await waitFor(() => {
-            expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=Chicken');
+        const btnBreakfast = screen.getByTestId('Breakfast-category-filter');
+        expect(btnBreakfast).toBeDefined();
+        userEvent.click(btnBreakfast);
         })
-        mock.mockRestore()
-    });
+    })  
 
-    it('Testa se ao selecionar o radio Primeira Letra, a busca na API é feita corretamente na página de comidas', async () => {
+    it('Testando o botão de categoria Chicken', async () => {
         const { history } = renderWithRouter(<App />);
-        history.push('/foods')
-
-        const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-            json: () => Promise.resolve(meals),
-        }))
-
-        const imgSearch = screen.getByTestId('search-top-btn');
-        userEvent.click(imgSearch);
-
-        const inputSearch = screen.getByTestId('search-input');
-        expect(inputSearch).toBeInTheDocument();
-
-        const btnSearch = screen.getByTestId('exec-search-btn');
-        const selectFirstLetter = screen.getAllByRole("radio")[2];
-        expect(btnSearch).toBeInTheDocument();
-        expect(selectFirstLetter).toBeInTheDocument();
-
-        userEvent.type(inputSearch, 'C');
-        userEvent.click(selectFirstLetter);
-        userEvent.click(btnSearch);
-
-        expect(history.location.pathname).toBe('/foods');
-        await waitFor(() => expect(global.fetch).toHaveBeenCalled());
+        history.push('/foods');
+        
         await waitFor(() => {
-            expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?f=C');
+        const btnChicken = screen.getByTestId('Chicken-category-filter');
+        expect(btnChicken).toBeDefined();
+        userEvent.click(btnChicken);
         })
-        mock.mockRestore()
-    });
+    }) 
 
-    it('Testa se ao selecionar o radio Ingrediente, a busca na API é feita corretamente na página de bebidas', async () => {
+    it('Testando o botão de categoria Dessert', async () => {
+        const { history } = renderWithRouter(<App />);
+        history.push('/foods');
+        
+        await waitFor(() => {
+        const btnDessert = screen.getByTestId('Dessert-category-filter');
+        expect(btnDessert).toBeDefined();
+        userEvent.click(btnDessert);
+        })
+    }) 
+
+    it('Testando o botão de categoria Goat', async () => {
+        const { history } = renderWithRouter(<App />);
+        history.push('/foods');
+        
+        await waitFor(() => {
+        const btnGoat = screen.getByTestId('Goat-category-filter');
+        expect(btnGoat).toBeDefined();
+        userEvent.click(btnGoat);
+        })
+    }) 
+
+    it('Testando o botão de All', async () => {
+        const { history } = renderWithRouter(<App />);
+        history.push('/foods');
+        
+        await waitFor(() => {
+        const btnAll = screen.getByTestId('All-category-filter');
+        expect(btnAll).toBeDefined();
+        userEvent.click(btnAll);
+        })
+    })  
+
+    it('Testando o botão de categoria All', async () => {
         const { history } = renderWithRouter(<App />);
         history.push('/drinks');
-
-        const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-            json: () => Promise.resolve(drinks),
-        }))
         
-        const imgSearch = screen.getByTestId('search-top-btn');
-        userEvent.click(imgSearch);
-
-        const inputSearch = screen.getByTestId('search-input');
-        expect(inputSearch).toBeInTheDocument();
-
-        const btnSearch = screen.getByTestId('exec-search-btn');
-        const selectIngredient = screen.getAllByRole("radio")[0];
-        expect(btnSearch).toBeInTheDocument();
-        expect(selectIngredient).toBeInTheDocument();
-
-        userEvent.type(inputSearch, 'Gin');
-        userEvent.click(selectIngredient);
-        userEvent.click(btnSearch);
-
-        expect(history.location.pathname).toBe('/drinks');
-        await waitFor(() => expect(global.fetch).toHaveBeenCalled());
         await waitFor(() => {
-            expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin');
+        const btnDrinks = screen.getByTestId('All-category-filter');
+        expect(btnDrinks).toBeDefined();
+        userEvent.click(btnDrinks);
         })
-        mock.mockRestore()
-    });
+    })  
 
-    it('Testa se ao selecionar o radio Nome, a busca na API é feita corretamente na página de bebidas', async () => {
+    it('Testando o botão de categoria Ordinary Drink', async () => {
         const { history } = renderWithRouter(<App />);
-        history.push('/drinks')
-
-        const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-            json: () => Promise.resolve(drinks),
-        }))
-
-        const imgSearch = screen.getByTestId('search-top-btn');
-        userEvent.click(imgSearch);
-
-        const inputSearch = screen.getByTestId('search-input');
-        expect(inputSearch).toBeInTheDocument();
-
-        const btnSearch = screen.getByTestId('exec-search-btn');
-        const selectIngredient = screen.getAllByRole("radio")[0];
-        expect(btnSearch).toBeInTheDocument();
-        expect(selectIngredient).toBeInTheDocument();
-
-        userEvent.type(inputSearch, 'Gin');
-        userEvent.click(selectIngredient);
-        userEvent.click(btnSearch);
-
-        expect(history.location.pathname).toBe('/drinks');
-        await waitFor(() => expect(global.fetch).toHaveBeenCalled());
+        history.push('/drinks');
+        
         await waitFor(() => {
-            expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=Gin');
+        const btnOrdinary = screen.getByTestId('Ordinary Drink-category-filter');
+        expect(btnOrdinary).toBeDefined();
+        userEvent.click(btnOrdinary);
         })
-        mock.mockRestore()
-    });
-
-    it('Testa se ao selecionar o radio Primeira Letra, a busca na API é feita corretamente na página de bebidas', async () => {
+    }) 
+    
+    it('Testando o botão de categoria Cocktail', async () => {
         const { history } = renderWithRouter(<App />);
-        history.push('/drinks')
-
-        const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-            json: () => Promise.resolve(drinks),
-        }))
-
-        const imgSearch = screen.getByTestId('search-top-btn');
-        userEvent.click(imgSearch);
-
-        const inputSearch = screen.getByTestId('search-input');
-        expect(inputSearch).toBeInTheDocument();
-
-        const btnSearch = screen.getByTestId('exec-search-btn');
-        const selectName = screen.getAllByRole("radio")[1];
-        expect(btnSearch).toBeInTheDocument();
-        expect(selectName).toBeInTheDocument();
-
-        userEvent.type(inputSearch, 'G');
-        userEvent.click(selectName);
-        userEvent.click(btnSearch);
-
-        expect(history.location.pathname).toBe('/drinks');
-        await waitFor(() => expect(global.fetch).toHaveBeenCalled());
+        history.push('/drinks');
+        
         await waitFor(() => {
-            expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=G');
+        const btnCocktail = screen.getByTestId('Cocktail-category-filter');
+        expect(btnCocktail).toBeDefined();
+        userEvent.click(btnCocktail);
         })
-        mock.mockRestore()
-    });
+    }) 
+        
+    it('Testando o botão de categoria Shake', async () => {
+        const { history } = renderWithRouter(<App />);
+        history.push('/drinks');
+        
+        await waitFor(() => {
+        const btnShake = screen.getByTestId('Shake-category-filter');
+        expect(btnShake).toBeDefined();
+        userEvent.click(btnShake);
+        })
+    })
+
+    it('Testando o botão de categoria Other', async () => {
+        const { history } = renderWithRouter(<App />);
+        history.push('/drinks');
+        
+        await waitFor(() => {
+        const btnOther = screen.getByTestId('Other/Unknown-category-filter');
+        expect(btnOther).toBeDefined();
+        userEvent.click(btnOther);
+        })
+    })
+
+    it('Testando o botão de categoria Cocoa', async () => {
+        
+    })
 })
