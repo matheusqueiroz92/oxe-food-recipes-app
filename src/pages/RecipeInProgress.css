@@ -1,0 +1,19 @@
+body {
+  box-sizing: border-box;
+  height: 640px;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  width: 360px;
+}
+
+img {
+  height: 220px;
+  width: 260px;
+}
+
+.icon {
+  height: 30px;
+  width: 30px;
+}
+
