@@ -17,3 +17,17 @@ img {
   width: 30px;
 }
 
+.list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-left: 20px;
+}
+
+.checked-item, .not-checked-item {
+  margin-left: 10px;
+}
+
+.checked-item {
+  text-decoration: line-through;
+}
