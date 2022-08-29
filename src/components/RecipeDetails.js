@@ -96,6 +96,14 @@ const RecipeDetails = ({ history }) => {
           data-testid="video"
           src={ details.strYoutube }
         />}
+        <button
+          style={ { position: 'fixed', bottom: 0 } }
+          type="button"
+          data-testid="start-recipe-btn"
+        >
+          Start Recipe
+
+        </button>
         { recomendations && renderRecomendations() }
       </div>
     );
