@@ -106,7 +106,7 @@ function Recipes() {
       >
         All
       </button>
-      <div>
+      <div data-testid="categoryFoods">
         { pathname === '/foods' ? categories.meals.map((category, index) => (
           <button
             type="button"
@@ -128,31 +128,10 @@ function Recipes() {
               { category.strCategory }
             </button>)).filter((element, idx) => idx < FIVE) }
       </div>
-      { pathname === '/foods' ? (recipes.map((recipe, index) => (
-        <Link
-          to={ `/foods/${recipe.idMeal}` }
-          key={ `d ${index}` }
-          className="card-recipe"
-          data-testid={ `${index}-recipe-card` }
-        >
-          <p
-            key={ `p ${index}` }
-            data-testid={ `${index}-card-name` }
-          >
-            {recipe.strMeal}
-          </p>
-          <img
-            className="recipe-img"
-            key={ index }
-            src={ recipe.strMealThumb }
-            alt={ recipe.strMeal }
-            data-testid={ `${index}-card-img` }
-          />
-        </Link>
-      )).filter((element, idx) => idx < TWELVE))
-        : recipes.map((recipe, index) => (
+      <div className="searchRecipes" data-testid="cardsRecipes">
+        { pathname === '/foods' ? (recipes.map((recipe, index) => (
           <Link
-            to={ `/drinks/${recipe.idDrink}` }
+            to={ `/foods/${recipe.idMeal}` }
             key={ `d ${index}` }
             className="card-recipe"
             data-testid={ `${index}-recipe-card` }
@@ -161,17 +140,40 @@ function Recipes() {
               key={ `p ${index}` }
               data-testid={ `${index}-card-name` }
             >
-              {recipe.strDrink}
+              {recipe.strMeal}
             </p>
             <img
               className="recipe-img"
               key={ index }
-              src={ recipe.strDrinkThumb }
-              alt={ recipe.strDrink }
+              src={ recipe.strMealThumb }
+              alt={ recipe.strMeal }
               data-testid={ `${index}-card-img` }
             />
           </Link>
-        )).filter((element, idx) => idx < TWELVE) }
+        )).filter((element, idx) => idx < TWELVE))
+          : recipes.map((recipe, index) => (
+            <Link
+              to={ `/drinks/${recipe.idDrink}` }
+              key={ `d ${index}` }
+              className="card-recipe"
+              data-testid={ `${index}-recipe-card` }
+            >
+              <p
+                key={ `p ${index}` }
+                data-testid={ `${index}-card-name` }
+              >
+                {recipe.strDrink}
+              </p>
+              <img
+                className="recipe-img"
+                key={ index }
+                src={ recipe.strDrinkThumb }
+                alt={ recipe.strDrink }
+                data-testid={ `${index}-card-img` }
+              />
+            </Link>
+          )).filter((element, idx) => idx < TWELVE) }
+      </div>
     </div>
   );
 }

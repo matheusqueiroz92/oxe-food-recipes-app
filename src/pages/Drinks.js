@@ -15,7 +15,7 @@ function Drinks({ history }) {
         <Header title="Drinks" profile search history={ history } />
       </div>
       <div>
-        { searchRecipes.meals.length < 1 ? <Recipes />
+        { searchRecipes.drinks.length < 1 ? <Recipes />
           : <p /> }
       </div>
       { searchRecipes.drinks.length === 1

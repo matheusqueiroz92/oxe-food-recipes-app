@@ -21,7 +21,7 @@ function Foods({ history }) {
       { searchRecipes.meals.length === 1
         ? history.push(`/foods/${searchRecipes.meals[0].idMeal}`)
         : (
-          <div className="search-recipes">
+          <div>
             { searchRecipes.meals.length > 1 ? searchRecipes.meals
               .map((recipe, index) => (
                 <div

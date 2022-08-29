@@ -29,6 +29,11 @@ function SearchBar() {
       if (data.meals === null) {
         throw new Error('Sorry, we haven\'t found any recipes for these filters.');
       }
+      const { meals } = data;
+      setSearchRecipes((prevMeals) => ({
+        ...prevMeals,
+        meals,
+      }));
       return setSearchRecipes(data);
     } catch (error) {
       global.alert(error.message);
@@ -47,16 +52,22 @@ function SearchBar() {
       if (radio.length > 1) {
         global.alert('Your search must have only 1 (one) character');
       }
-      try {
-        const response = await fetch(endpoint);
-        const data = await response.json();
-        if (data.drinks === null) {
-          throw new Error('Sorry, we haven\'t found any recipes for these filters.');
-        }
-        return setSearchRecipes(data);
-      } catch (error) {
-        global.alert(error.message);
+      endpoint = `https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${text}`;
+    }
+    try {
+      const response = await fetch(endpoint);
+      const data = await response.json();
+      if (data.drinks === null) {
+        throw new Error('Sorry, we haven\'t found any recipes for these filters.');
       }
+      const { drinks } = data;
+      setSearchRecipes((prevDrinks) => ({
+        ...prevDrinks,
+        drinks,
+      }));
+      return setSearchRecipes(data);
+    } catch (error) {
+      global.alert(error.message);
     }
   };
 
