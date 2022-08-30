@@ -44,7 +44,7 @@ function Recipes() {
       };
       getMealApi();
       getCategoriesApi();
-    } else if (pathname === '/drinks') {
+    } if (pathname === '/drinks') {
       const getCategoriesApi = async () => {
         const URL = 'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list';
         const response = await fetch(URL);
@@ -92,7 +92,7 @@ function Recipes() {
   const clearCategories = () => {
     if (pathname === '/foods') {
       getMealApi();
-    } else if (pathname === '/drinks') {
+    } if (pathname === '/drinks') {
       getDrinkApi();
     }
   };

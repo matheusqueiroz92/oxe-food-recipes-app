@@ -148,7 +148,7 @@ describe('Testando o componente SearchBar', () => {
         const { history } = renderWithRouter(<App />);
         history.push('/foods');
 
-        global.alert = jest.fn();
+        window.alert = jest.fn();
 
         const iconSearch = screen.getByTestId('search-top-btn');
 
@@ -163,7 +163,7 @@ describe('Testando o componente SearchBar', () => {
         userEvent.click(btnSearch);
 
         await waitFor(() => {
-        expect(global.alert).toBeCalledWith('Sorry, we haven\'t found any recipes for these filters.');
+        expect(window.alert).toBeCalledWith('Sorry, we haven\'t found any recipes for these filters.');
         })
     })
 
@@ -203,7 +203,7 @@ describe('Testando o componente SearchBar', () => {
         history.push('/drinks')
 
         const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-            json: () => Promise.resolve(meals),
+            json: () => Promise.resolve(drinks),
         }))
         
         const imgSearch = screen.getByTestId('search-top-btn')
@@ -234,7 +234,7 @@ describe('Testando o componente SearchBar', () => {
         history.push('/drinks')
 
         const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-            json: () => Promise.resolve(meals),
+            json: () => Promise.resolve(drinks),
         }))
 
         const imgSearch = screen.getByTestId('search-top-btn')
