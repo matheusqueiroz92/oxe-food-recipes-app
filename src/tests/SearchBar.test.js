@@ -203,7 +203,7 @@ describe('Testando o componente SearchBar', () => {
         history.push('/drinks')
 
         const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-            json: () => Promise.resolve(meals),
+            json: () => Promise.resolve(drinks),
         }))
         
         const imgSearch = screen.getByTestId('search-top-btn')
@@ -234,7 +234,7 @@ describe('Testando o componente SearchBar', () => {
         history.push('/drinks')
 
         const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-            json: () => Promise.resolve(meals),
+            json: () => Promise.resolve(drinks),
         }))
 
         const imgSearch = screen.getByTestId('search-top-btn')
