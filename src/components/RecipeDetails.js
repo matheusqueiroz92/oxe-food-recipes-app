@@ -1,9 +1,11 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import RecipesContext from '../context/RecipesContext';
 import Recommended from './Recommended';
 
 const RecipeDetails = ({ history }) => {
+  const { doneRecipes } = useContext(RecipesContext);
   const [details, setDetails] = useState();
   const [recomendations, setRecomendations] = useState();
   const { pathname } = history.location;
@@ -12,7 +14,6 @@ const RecipeDetails = ({ history }) => {
 
   useEffect(() => {
     const getDetails = async () => {
-      // const TEST_RECIPE_ID = '52997';
       const URL = `https://www.the${isFood ? 'meal' : 'cocktail'}db.com/api/json/v1/1/lookup.php?i=${id.id}`;
       const response = await fetch(URL);
       const data = await response.json();
@@ -100,6 +101,7 @@ const RecipeDetails = ({ history }) => {
           style={ { position: 'fixed', bottom: 0 } }
           type="button"
           data-testid="start-recipe-btn"
+          disabled={ doneRecipes.id === id.id }
         >
           Start Recipe
 
