@@ -15,7 +15,6 @@ function Profile() {
   return (
     <div>
       <Header title="Profile" profile history={ history } />
-
       <div>
         <p data-testid="profile-email">{email}</p>
 
