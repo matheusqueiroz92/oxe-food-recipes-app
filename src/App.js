@@ -7,8 +7,6 @@ import Login from './pages/Login';
 import Foods from './pages/Foods';
 
 import Drinks from './pages/Drinks';
-import FoodRecipe from './pages/FoodRecipe';
-import DrinkRecipe from './pages/DrinkRecipe';
 import RecipeInProgress from './pages/RecipeInProgress';
 import Profile from './pages/Profile';
 import DoneRecipes from './pages/DoneRecipes';

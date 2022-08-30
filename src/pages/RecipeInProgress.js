@@ -23,7 +23,7 @@ function RecipeInProgress() {
         [id]: [],
       },
     });
-  }, []);
+  });
 
   useEffect(() => {
     const fetchEndpoint = async (URL, compareData) => {
@@ -53,7 +53,7 @@ function RecipeInProgress() {
     if (compare === 'drinks') {
       fetchEndpoint(ENDPOINTDRINK, 'drinks');
     }
-  }, []);
+  });
 
   const handleCheck = ({ target }) => {
     let updatedList = [...checked];
