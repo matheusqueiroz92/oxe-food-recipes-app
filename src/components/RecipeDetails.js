@@ -104,7 +104,9 @@ const RecipeDetails = ({ history }) => {
           Start Recipe
 
         </button>
-        { recomendations && renderRecomendations() }
+        <div className="recomendationsContainer">
+          { recomendations && renderRecomendations() }
+        </div>
       </div>
     );
   };
