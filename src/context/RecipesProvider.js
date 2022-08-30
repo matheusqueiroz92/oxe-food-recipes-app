@@ -3,11 +3,24 @@ import PropTypes from 'prop-types';
 import RecipesContext from './RecipesContext';
 
 function RecipesProvider({ children }) {
+  const [doneRecipes, setDoneRecipes] = useState({
+    id: '',
+    type: '',
+    nationality: '',
+    category: '',
+    alcoholicOrNot: '',
+    name: '',
+    image: '',
+    doneDate: '',
+    tags: '',
+  });
+
   const [searchRecipes, setSearchRecipes] = useState({
     init: 0,
     meals: [],
     drinks: [],
   });
+
   const { Provider } = RecipesContext;
 
   const [login, setLogin] = useState({
@@ -36,6 +49,8 @@ function RecipesProvider({ children }) {
       value={ {
         login,
         setLogin,
+        doneRecipes,
+        setDoneRecipes,
         toogleButton,
         setToogleButton,
         searchRecipes,
