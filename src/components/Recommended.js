@@ -5,20 +5,29 @@ import Carousel from 'react-elastic-carousel';
 const Recommended = ({ drinks, meals }) => {
   const TX = '-recomendation-card';
   const SWIP_NUMBER = 2;
+  const breakPoints = [
+    { width: 1, itemsToShow: 2 },
+    { width: 550, itemsToShow: 2 },
+    { width: 768, itemsToShow: 2 },
+    { width: 1200, itemsToShow: 2 },
+  ];
 
   if (drinks) {
     return (
-      <Carousel itemsToShow={ SWIP_NUMBER } itemsToScroll={ SWIP_NUMBER }>
+      <Carousel
+        itemsToShow={ SWIP_NUMBER }
+        itemsToScroll={ SWIP_NUMBER }
+        breakPoints={ breakPoints }
+      >
         {drinks.map((e, index) => (
-          <div key={ index }>
+          <div key={ index } className="recomendationItem">
             <h5 data-testid={ `${index}-recomendation-title` }>{e.strDrink}</h5>
             <img
               alt="drink recommendation"
               key={ index }
               src={ e.strDrinkThumb }
               data-testid={ `${index}${TX}` }
-              width={ 60 }
-              height={ 60 }
+              style={ { width: 60, height: 60 } }
             />
           </div>))}
       </Carousel>
@@ -33,8 +42,7 @@ const Recommended = ({ drinks, meals }) => {
             key={ index }
             data-testid={ `${index}${TX}` }
             src={ e.strMealThumb }
-            width={ 60 }
-            height={ 60 }
+            style={ { width: 60, height: 60 } }
           />
         </div>)) }
     </Carousel>

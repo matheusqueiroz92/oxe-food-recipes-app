@@ -4,6 +4,15 @@ import { useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import Recommended from './Recommended';
 
+const TEST_STATE = {
+  cocktails: {
+    id: [],
+  },
+  meals: {
+    id: [],
+  },
+};
+
 const RecipeDetails = ({ history }) => {
   const { doneRecipes } = useContext(RecipesContext);
   const [details, setDetails] = useState();
@@ -11,6 +20,10 @@ const RecipeDetails = ({ history }) => {
   const { pathname } = history.location;
   const isFood = pathname.includes('foods');
   const id = useParams();
+  const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  // const isInProgress = isFood && inProgressRecipes
+  //   ? inProgressRecipes.meals[id]
+  //   : inProgressRecipes.cocktails[id];
 
   useEffect(() => {
     const getDetails = async () => {
@@ -58,9 +71,9 @@ const RecipeDetails = ({ history }) => {
     const renderRecomendations = () => {
       if (isFood) {
         return (Recommended({
-          drinks: recomendations.drinks.splice(0, RECOMMENDED_QUANTITY) }));
+          drinks: recomendations.drinks.slice(0, RECOMMENDED_QUANTITY) }));
       } return (Recommended({
-        meals: recomendations.meals.splice(0, RECOMMENDED_QUANTITY) }));
+        meals: recomendations.meals.slice(0, RECOMMENDED_QUANTITY) }));
     };
 
     return (
@@ -103,7 +116,7 @@ const RecipeDetails = ({ history }) => {
           data-testid="start-recipe-btn"
           disabled={ doneRecipes.id === id.id }
         >
-          Start Recipe
+          { inProgressRecipes ? 'Continue Recipe' : 'Start Recipe' }
 
         </button>
         <div className="recomendationsContainer">
