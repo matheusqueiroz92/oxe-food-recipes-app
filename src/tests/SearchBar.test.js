@@ -148,7 +148,7 @@ describe('Testando o componente SearchBar', () => {
         const { history } = renderWithRouter(<App />);
         history.push('/foods');
 
-        global.alert = jest.fn();
+        window.alert = jest.fn();
 
         const iconSearch = screen.getByTestId('search-top-btn');
 
@@ -163,7 +163,7 @@ describe('Testando o componente SearchBar', () => {
         userEvent.click(btnSearch);
 
         await waitFor(() => {
-        expect(global.alert).toBeCalledWith('Sorry, we haven\'t found any recipes for these filters.');
+        expect(window.alert).toBeCalledWith('Sorry, we haven\'t found any recipes for these filters.');
         })
     })
 

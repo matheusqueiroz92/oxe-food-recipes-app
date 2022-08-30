@@ -44,8 +44,11 @@ describe('Testando o componente Recipes', () => {
         const btnBeef = screen.getByTestId('Beef-category-filter');
         expect(btnBeef).toBeDefined();
         userEvent.click(btnBeef);
+        const cardBeef = screen.getByText(/beef and mustard pie/i);
+        expect(cardBeef).toBeInTheDocument();
         })
     })  
+
 
     it('Testando o botão de categoria Breakfast', async () => {
         const { history } = renderWithRouter(<App />);
@@ -58,59 +61,41 @@ describe('Testando o componente Recipes', () => {
         })
     })  
 
-    it('Testando o botão de categoria Chicken', async () => {
-        const { history } = renderWithRouter(<App />);
-        history.push('/foods');
-        
-        await waitFor(() => {
-        const btnChicken = screen.getByTestId('Chicken-category-filter');
-        expect(btnChicken).toBeDefined();
-        userEvent.click(btnChicken);
-        })
-    }) 
-
-    it('Testando o botão de categoria Dessert', async () => {
-        const { history } = renderWithRouter(<App />);
-        history.push('/foods');
-        
-        await waitFor(() => {
-        const btnDessert = screen.getByTestId('Dessert-category-filter');
-        expect(btnDessert).toBeDefined();
-        userEvent.click(btnDessert);
-        })
-    }) 
-
-    it('Testando o botão de categoria Goat', async () => {
-        const { history } = renderWithRouter(<App />);
-        history.push('/foods');
-        
-        await waitFor(() => {
-        const btnGoat = screen.getByTestId('Goat-category-filter');
-        expect(btnGoat).toBeDefined();
-        userEvent.click(btnGoat);
-        })
-    }) 
-
     it('Testando o botão de All', async () => {
         const { history } = renderWithRouter(<App />);
         history.push('/foods');
+
+        const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
+            json: () => Promise.resolve(meals),
+        }))
         
         await waitFor(() => {
         const btnAll = screen.getByTestId('All-category-filter');
         expect(btnAll).toBeDefined();
         userEvent.click(btnAll);
+        expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+        expect(history.location.pathname).toBe('/foods');
         })
+
+        mock.mockRestore()
     })  
 
     it('Testando o botão de categoria All', async () => {
         const { history } = renderWithRouter(<App />);
         history.push('/drinks');
+
+        const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
+            json: () => Promise.resolve(drinks),
+        }))
         
         await waitFor(() => {
         const btnDrinks = screen.getByTestId('All-category-filter');
         expect(btnDrinks).toBeDefined();
         userEvent.click(btnDrinks);
+        expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+        expect(history.location.pathname).toBe('/drinks');
         })
+        mock.mockRestore()
     })  
 
     it('Testando o botão de categoria Ordinary Drink', async () => {
@@ -121,43 +106,47 @@ describe('Testando o componente Recipes', () => {
         const btnOrdinary = screen.getByTestId('Ordinary Drink-category-filter');
         expect(btnOrdinary).toBeDefined();
         userEvent.click(btnOrdinary);
+        const cardOrdinary = screen.getByText(/3\-mile long island iced tea/i);
+        expect(cardOrdinary).toBeInTheDocument();
         })
     }) 
-    
-    it('Testando o botão de categoria Cocktail', async () => {
+
+    it('Teste de rota api de comidas', async () => {
         const { history } = renderWithRouter(<App />);
-        history.push('/drinks');
-        
+        history.push('/foods');
+
+        const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
+            json: () => Promise.resolve(meals),
+        }))
+
+        await waitFor(() => expect(global.fetch).toHaveBeenCalled());
         await waitFor(() => {
-        const btnCocktail = screen.getByTestId('Cocktail-category-filter');
-        expect(btnCocktail).toBeDefined();
-        userEvent.click(btnCocktail);
+            const btnFood = screen.getByTestId('food-bottom-btn');
+            userEvent.click(btnFood);
+            expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+            expect(history.location.pathname).toBe('/foods');
         })
-    }) 
-        
-    it('Testando o botão de categoria Shake', async () => {
-        const { history } = renderWithRouter(<App />);
-        history.push('/drinks');
-        
-        await waitFor(() => {
-        const btnShake = screen.getByTestId('Shake-category-filter');
-        expect(btnShake).toBeDefined();
-        userEvent.click(btnShake);
-        })
+
+        mock.mockRestore()
+
     })
 
-    it('Testando o botão de categoria Other', async () => {
+    it('Teste de rota api de bebidas', async () => {
         const { history } = renderWithRouter(<App />);
         history.push('/drinks');
-        
-        await waitFor(() => {
-        const btnOther = screen.getByTestId('Other/Unknown-category-filter');
-        expect(btnOther).toBeDefined();
-        userEvent.click(btnOther);
-        })
-    })
 
-    it('Testando o botão de categoria Cocoa', async () => {
-        
+        const mock = jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
+            json: () => Promise.resolve(drinks),
+        }))
+
+        await waitFor(() => expect(global.fetch).toHaveBeenCalled());
+        await waitFor(() => {
+            const btnDrink = screen.getByTestId('drinks-bottom-btn');
+            userEvent.click(btnDrink);
+            expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+            expect(history.location.pathname).toBe('/drinks');
+        })
+
+        mock.mockRestore()  
     })
 })
