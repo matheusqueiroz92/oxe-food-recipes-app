@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 import Carousel from 'react-elastic-carousel';
 
@@ -38,6 +39,15 @@ const Recommended = ({ drinks, meals }) => {
         </div>)) }
     </Carousel>
   );
+};
+
+Recommended.propTypes = {
+  drinks: PropTypes.shape({
+    map: PropTypes.func,
+  }).isRequired,
+  meals: PropTypes.shape({
+    map: PropTypes.func,
+  }).isRequired,
 };
 
 export default Recommended;
