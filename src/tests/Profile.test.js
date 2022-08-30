@@ -1,8 +1,7 @@
 import React from 'react';
-import { getByTestId, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import Profile from '../pages/Profile';
 import userEvent from '@testing-library/user-event';
-import RecipesProvider from '../context/RecipesProvider';
 import renderWithRouter from './renderWithRouter';
 
 

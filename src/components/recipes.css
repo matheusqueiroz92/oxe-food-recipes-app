@@ -1,0 +1,17 @@
+.recipes {
+  display: flex;
+  flex-wrap: wrap;
+  height: 640px;
+  width: 360px;
+}
+
+.recipe-img {
+  height: auto;
+  max-height: 150px;
+  max-width: 200px;
+  width: auto;
+}
+
+.card-recipe {
+  border: 1px solid black;
+}
