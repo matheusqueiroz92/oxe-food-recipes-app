@@ -22,16 +22,8 @@ function App() {
         <Route exact path="/drinks" component={ Drinks } />
         <Route exact path="/foods/:id" component={ RecipeDetails } />
         <Route exact path="/drinks/:id" component={ RecipeDetails } />
-        <Route
-          exact
-          path="/foods/:id/in-progress"
-          component={ RecipeInProgress }
-        />
-        <Route
-          exact
-          path="/drinks/:id/in-progress"
-          component={ RecipeInProgress }
-        />
+        <Route path="/foods/:id/in-progress" component={ RecipeInProgress } />
+        <Route path="/drinks/:id/in-progress" component={ RecipeInProgress } />
         <Route path="/profile" component={ Profile } />
         <Route path="/done-recipes" component={ DoneRecipes } />
         <Route path="/favorite-recipes" component={ FavoriteRecipes } />
