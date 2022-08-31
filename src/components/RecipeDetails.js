@@ -16,8 +16,6 @@ const RecipeDetails = ({ history }) => {
   const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
   useEffect(() => {
-    const prevLocal = localStorage.getItem('user');
-    console.log(prevLocal);
     const getDetails = async () => {
       const URL = `https://www.the${isFood ? 'meal' : 'cocktail'}db.com/api/json/v1/1/lookup.php?i=${id.id}`;
       const response = await fetch(URL);
@@ -34,7 +32,7 @@ const RecipeDetails = ({ history }) => {
     };
     getDetails();
     getRecomendations();
-  });
+  }, [isFood, id.id]);
 
   // Fonte de onde peguei como fazer esse filtro dentro do objeto: https://stackabuse.com/how-to-filter-an-object-by-key-in-javascript/
   const filterObject = (filter) => Object.keys(details)
@@ -52,7 +50,6 @@ const RecipeDetails = ({ history }) => {
     }
     return false;
   };
-  console.log(isInProgress());
 
   const ingridientsAndMeasures = () => {
     const INGREDIENTS = Object.values(filterObject('Ingredient'));
@@ -72,11 +69,13 @@ const RecipeDetails = ({ history }) => {
   const renderFoodDetails = () => {
     const RECOMMENDED_QUANTITY = 6;
     const renderRecomendations = () => {
-      if (isFood) {
+      if (isFood && recomendations) {
         return (Recommended({
           drinks: recomendations.drinks.slice(0, RECOMMENDED_QUANTITY) }));
-      } return (Recommended({
-        meals: recomendations.meals.slice(0, RECOMMENDED_QUANTITY) }));
+      } if (recomendations) {
+        return (Recommended({
+          meals: recomendations.meals.slice(0, RECOMMENDED_QUANTITY) }));
+      }
     };
 
     return (
@@ -122,7 +121,6 @@ const RecipeDetails = ({ history }) => {
           onClick={ () => history.push(`${pathname}/in-progress`) }
         >
           { isInProgress() ? 'Continue Recipe' : 'Start Recipe' }
-          Continue Recipe
         </button>
         <div className="recomendationsContainer">
           { recomendations && renderRecomendations() }
