@@ -1,10 +1,10 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import LikeAndShare from '../components/LikeAndShare';
 import './RecipeInProgress.css';
 
-function RecipeInProgress() {
+function RecipeInProgress({ history }) {
   const { id } = useParams();
   const { pathname } = useLocation();
   const compare = pathname.includes('drink') ? 'drinks' : 'foods';
@@ -105,18 +105,19 @@ function RecipeInProgress() {
         }
       </div>
       <p data-testid="instructions">{handleRecipe.strInstructions}</p>
-
-      <button type="button" data-testid="share-btn">
-        <img className="icon" src={ shareIcon } alt="" />
-      </button>
-
-      <button type="button" data-testid="favorite-btn">
-        <img className="icon" src={ whiteHeartIcon } alt="" />
-      </button>
+      <LikeAndShare history={ history } />
       <p data-testid="recipe-category" />
       <button type="button" data-testid="finish-recipe-btn">Finish Recipe</button>
     </div>
   );
 }
+
+RecipeInProgress.propTypes = {
+  history: PropTypes.shape({
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+  }).isRequired,
+};
 
 export default RecipeInProgress;

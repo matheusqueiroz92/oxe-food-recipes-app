@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
+import LikeAndShare from './LikeAndShare';
 import Recommended from './Recommended';
 
 const RecipeDetails = ({ history }) => {
@@ -15,6 +16,8 @@ const RecipeDetails = ({ history }) => {
   const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
   useEffect(() => {
+    const prevLocal = localStorage.getItem('user');
+    console.log(prevLocal);
     const getDetails = async () => {
       const URL = `https://www.the${isFood ? 'meal' : 'cocktail'}db.com/api/json/v1/1/lookup.php?i=${id.id}`;
       const response = await fetch(URL);
@@ -31,7 +34,7 @@ const RecipeDetails = ({ history }) => {
     };
     getDetails();
     getRecomendations();
-  }, []);
+  });
 
   // Fonte de onde peguei como fazer esse filtro dentro do objeto: https://stackabuse.com/how-to-filter-an-object-by-key-in-javascript/
   const filterObject = (filter) => Object.keys(details)
@@ -103,6 +106,7 @@ const RecipeDetails = ({ history }) => {
 
         </p>
         <p data-testid="instructions">{ details.strInstructions }</p>
+        <LikeAndShare history={ history } />
         { isFood && <iframe
           title="Recipe Video"
           width="420"
@@ -115,9 +119,10 @@ const RecipeDetails = ({ history }) => {
           type="button"
           data-testid="start-recipe-btn"
           disabled={ doneRecipes.id === id.id }
+          onClick={ () => history.push(`${pathname}/in-progress`) }
         >
           { isInProgress() ? 'Continue Recipe' : 'Start Recipe' }
-
+          Continue Recipe
         </button>
         <div className="recomendationsContainer">
           { recomendations && renderRecomendations() }
@@ -135,6 +140,7 @@ const RecipeDetails = ({ history }) => {
 
 RecipeDetails.propTypes = {
   history: PropTypes.shape({
+    push: PropTypes.shape,
     location: PropTypes.shape({
       pathname: PropTypes.string,
     }),

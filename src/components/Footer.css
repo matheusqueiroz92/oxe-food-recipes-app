@@ -1,5 +1,19 @@
 .footer {
   bottom: 0;
   position: fixed;
+  margin-left: 180px;
 }
 
+.img-drinks {
+  height: auto;
+  max-height: 80px;
+  max-width: 100px;
+  width: auto;
+}
+
+.img-foods {
+  height: auto;
+  max-height: 150px;
+  max-width: 150px;
+  width: auto;
+}

@@ -1,10 +1,8 @@
 import React from 'react';
 import { screen, waitFor } from '@testing-library/react';
 import renderWithRouter from './renderWithRouter';
-import userEvent from '@testing-library/user-event';
 import App from '../App';
 import meals from '../../cypress/mocks/meals';
-import { array } from 'prop-types';
 
 describe('testando a pagina de receitas em progresso', () => {
   test('testando os elementos da pagina', async () => {
@@ -40,7 +38,7 @@ describe('testando a pagina de receitas em progresso', () => {
     
     const btn = screen.getByRole('button', { name: /finish recipe/i })
     expect(btn).toBeInTheDocument();
+    mock.mockRestore()
   });
 
-  mock.mockRestore()
 });
