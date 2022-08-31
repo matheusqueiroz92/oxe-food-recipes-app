@@ -32,7 +32,7 @@ const RecipeDetails = ({ history }) => {
     };
     getDetails();
     getRecomendations();
-  }, []);
+  });
 
   // Fonte de onde peguei como fazer esse filtro dentro do objeto: https://stackabuse.com/how-to-filter-an-object-by-key-in-javascript/
   const filterObject = (filter) => Object.keys(details)
