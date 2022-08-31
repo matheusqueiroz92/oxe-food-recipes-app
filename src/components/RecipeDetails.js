@@ -4,26 +4,15 @@ import { useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import Recommended from './Recommended';
 
-const TEST_STATE = {
-  cocktails: {
-    id: [],
-  },
-  meals: {
-    id: [],
-  },
-};
-
 const RecipeDetails = ({ history }) => {
   const { doneRecipes } = useContext(RecipesContext);
   const [details, setDetails] = useState();
   const [recomendations, setRecomendations] = useState();
   const { pathname } = history.location;
   const isFood = pathname.includes('foods');
+  const isDrink = pathname.includes('drink');
   const id = useParams();
   const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
-  // const isInProgress = isFood && inProgressRecipes
-  //   ? inProgressRecipes.meals[id]
-  //   : inProgressRecipes.cocktails[id];
 
   useEffect(() => {
     const getDetails = async () => {
@@ -50,6 +39,17 @@ const RecipeDetails = ({ history }) => {
     .reduce((obj, key) => Object.assign(obj, {
       [key]: details[key],
     }), {});
+
+  const isInProgress = () => {
+    if (inProgressRecipes && isFood) {
+      return Object.keys(inProgressRecipes.meals).includes(id.id);
+    }
+    if (inProgressRecipes && isDrink) {
+      return Object.keys(inProgressRecipes.cocktails).includes(id.id);
+    }
+    return false;
+  };
+  console.log(isInProgress());
 
   const ingridientsAndMeasures = () => {
     const INGREDIENTS = Object.values(filterObject('Ingredient'));
@@ -116,7 +116,7 @@ const RecipeDetails = ({ history }) => {
           data-testid="start-recipe-btn"
           disabled={ doneRecipes.id === id.id }
         >
-          { inProgressRecipes ? 'Continue Recipe' : 'Start Recipe' }
+          { isInProgress() ? 'Continue Recipe' : 'Start Recipe' }
 
         </button>
         <div className="recomendationsContainer">
