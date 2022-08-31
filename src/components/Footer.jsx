@@ -14,14 +14,24 @@ function Footer() {
         type="button"
         onClick={ () => history.push('/drinks') }
       >
-        <img data-testid="drinks-bottom-btn" src={ DrinkIcon } alt="drinks" />
+        <img
+          className="img-drinks"
+          data-testid="drinks-bottom-btn"
+          src={ DrinkIcon }
+          alt="drinks"
+        />
       </button>
       <button
         className="btn"
         type="button"
         onClick={ () => history.push('/foods') }
       >
-        <img data-testid="food-bottom-btn" src={ MealIcon } alt="foods" />
+        <img
+          className="img-foods"
+          data-testid="food-bottom-btn"
+          src={ MealIcon }
+          alt="foods"
+        />
       </button>
     </footer>
   );
