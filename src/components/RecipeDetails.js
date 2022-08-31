@@ -11,7 +11,9 @@ const RecipeDetails = ({ history }) => {
   const [recomendations, setRecomendations] = useState();
   const { pathname } = history.location;
   const isFood = pathname.includes('foods');
+  const isDrink = pathname.includes('drink');
   const id = useParams();
+  const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
   useEffect(() => {
     const prevLocal = localStorage.getItem('user');
@@ -41,6 +43,17 @@ const RecipeDetails = ({ history }) => {
       [key]: details[key],
     }), {});
 
+  const isInProgress = () => {
+    if (inProgressRecipes && isFood) {
+      return Object.keys(inProgressRecipes.meals).includes(id.id);
+    }
+    if (inProgressRecipes && isDrink) {
+      return Object.keys(inProgressRecipes.cocktails).includes(id.id);
+    }
+    return false;
+  };
+  console.log(isInProgress());
+
   const ingridientsAndMeasures = () => {
     const INGREDIENTS = Object.values(filterObject('Ingredient'));
     const MEASURES = Object.values(filterObject('Measure'));
@@ -61,9 +74,9 @@ const RecipeDetails = ({ history }) => {
     const renderRecomendations = () => {
       if (isFood) {
         return (Recommended({
-          drinks: recomendations.drinks.splice(0, RECOMMENDED_QUANTITY) }));
+          drinks: recomendations.drinks.slice(0, RECOMMENDED_QUANTITY) }));
       } return (Recommended({
-        meals: recomendations.meals.splice(0, RECOMMENDED_QUANTITY) }));
+        meals: recomendations.meals.slice(0, RECOMMENDED_QUANTITY) }));
     };
 
     return (
@@ -108,6 +121,7 @@ const RecipeDetails = ({ history }) => {
           disabled={ doneRecipes.id === id.id }
           onClick={ () => history.push(`${pathname}/in-progress`) }
         >
+          { isInProgress() ? 'Continue Recipe' : 'Start Recipe' }
           Continue Recipe
         </button>
         <div className="recomendationsContainer">

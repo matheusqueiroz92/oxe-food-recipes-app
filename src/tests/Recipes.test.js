@@ -49,7 +49,6 @@ describe('Testando o componente Recipes', () => {
         })
     })  
 
-
     it('Testando o botão de categoria Breakfast', async () => {
         const { history } = renderWithRouter(<App />);
         history.push('/foods');

@@ -9,6 +9,10 @@ body {
 
 .recomendationsContainer {
   border: 1px solid red;
-  display: flex;
-  width: 423px;
+  width: 250px;
 }
+
+.recomendationItem {
+  margin: 10px
+}
+
