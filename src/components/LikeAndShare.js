@@ -6,15 +6,10 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function LikeAndShare({ history }) {
-  // const { id } = useParams();
   const { pathname } = history.location;
   const [copied, setCopied] = useState(false);
   const [favorite, setFavorite] = useState(false);
-  // useEffect(() => {
-  //   const recipesFavorites = localStorage.getItem('favoriteRecipes');
-  // se o id da receita estiver em recipesFavorites o coração tem que estar preenchido
-  // se não tem que estar vazio
-  // });
+
   const isFavorite = () => {
     setFavorite(!favorite);
     if (favorite === true) {
@@ -23,6 +18,7 @@ function LikeAndShare({ history }) {
       localStorage.removeItem('favoriteRecipes');
     }
   };
+
   return (
     <div>
       <CopyToClipboard
