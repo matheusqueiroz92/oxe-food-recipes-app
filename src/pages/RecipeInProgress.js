@@ -18,32 +18,11 @@ function RecipeInProgress() {
   const ENDPOINTDRINK = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
 
   useEffect(() => {
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
-      cocktails: {},
-      meals: {},
-    }));
-    const prev = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (prev === null) {
-      if (compare === 'drinks') {
-        return localStorage.setItem('inProgressRecipes', JSON.stringify({
-          cocktails: { [id]: [] },
-          meals: {},
-        }));
-      } return localStorage.setItem('inProgressRecipes', JSON.stringify({
-        cocktails: {},
-        meals: { [id]: [] },
-      }));
-    } if (compare === 'drinks') {
-      return localStorage.setItem('inProgressRecipes', JSON.stringify({
-        ...prev,
-        cocktails: { [id]: [] },
-        meals: {},
-      }));
-    } return localStorage.setItem('inProgressRecipes', JSON.stringify({
-      ...prev,
-      cocktails: {},
-      meals: { [id]: [] },
-    }));
+    const storage = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (storage) {
+      setLocal(storage);
+    }
+    console.log(storage);
   }, []);
 
   useEffect(() => {
@@ -65,7 +44,6 @@ function RecipeInProgress() {
         .map((ingredient, index) => (
           `${ingredient[1]} ${measuredFilter[index][1] === null
             ? '' : measuredFilter[index][1]}`));
-      console.log(ingredientList);
 
       if (compare === 'foods') {
         const newPrev = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -80,11 +58,11 @@ function RecipeInProgress() {
         const newPrev = JSON.parse(localStorage.getItem('inProgressRecipes'));
         setLocal(newPrev);
 
-        const ingredientLocal = ingredientList.map((item) => ({
+        /* const ingredientLocal = ingredientList.map((item) => ({
           ingredient: item,
           check: newPrev.cocktails[id].includes(item),
-        }));
-        setCheckedList(ingredientLocal);
+        })); */
+        setCheckedList(ingredientList);
       }
     };
 
@@ -99,8 +77,7 @@ function RecipeInProgress() {
 
   const enableCheck = () => {
     const newPrev = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    // console.log(newPrev);
-
+    if (!newPrev) return;
     if (compare === 'foods' && newPrev.meals[id].length === checkedList.length) {
       return setDisableBtn(true);
     }
@@ -116,6 +93,7 @@ function RecipeInProgress() {
   }, [local, checkedList]);
 
   const handleCheck = ({ target }) => {
+    console.log(target.value);
     if (compare === 'foods') {
       const prev = JSON.parse(localStorage.getItem('inProgressRecipes'));
       if (target.checked) {
@@ -131,9 +109,14 @@ function RecipeInProgress() {
     } else {
       const prev = JSON.parse(localStorage.getItem('inProgressRecipes'));
       if (target.checked) {
+        if (!prev) {
+          const test = { cocktails: { [id]: [target.value] } };
+          return localStorage.setItem('inProgressRecipes', JSON.stringify(test));
+        }
         prev.cocktails[id] = [...prev.cocktails[id], target.value];
         localStorage.setItem('inProgressRecipes', JSON.stringify(prev));
         setLocal(prev);
+        console.log(prev);
       } else {
         const newPrev = prev.cocktails[id].filter((item) => item !== target.value);
         prev.cocktails[id] = newPrev;
@@ -150,9 +133,13 @@ function RecipeInProgress() {
     setChecked(updatedList);
   };
 
-  const isChecked = (item) => (checked.includes(item)
-    ? 'checked-item' : 'not-checked-ingredient');
-
+  const isChecked = (item) => {
+    console.log(local);
+    if (local) {
+      return local.cocktails[id].includes(item)
+        ? 'checked-item' : 'not-checked-ingredient';
+    }
+  };
   return (
     <div>
 
@@ -182,15 +169,15 @@ function RecipeInProgress() {
               data-testid={ `${index}-ingredient-step` }
             >
               <input
-                value={ item.ingredient }
+                value={ item }
                 id={ index }
                 type="checkbox"
                 onChange={ handleCheck }
                 checked={
-                  local.meals[id].includes(item.ingredients) ? item.check : false
+                  local.meals[id].includes(item) ? item.check : false
                 }
               />
-              <span className={ isChecked(item.ingredient) }>{item.ingredient}</span>
+              <span className={ isChecked(item) }>{item}</span>
             </label>))
         }
         {
@@ -203,15 +190,15 @@ function RecipeInProgress() {
               data-testid={ `${index}-ingredient-step` }
             >
               <input
-                value={ item.ingredient }
+                value={ item }
                 id={ index }
                 type="checkbox"
                 onChange={ handleCheck }
                 checked={
-                  local.cocktails[id].includes(item) ? item.check : false
+                  local && local.cocktails[id].includes(item)
                 }
               />
-              <span className={ isChecked(item.ingredient) }>{item.ingredient}</span>
+              <span className={ isChecked(item) }>{item}</span>
             </label>))
         }
       </div>
