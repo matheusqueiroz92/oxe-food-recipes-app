@@ -19,6 +19,7 @@ function LikeAndShare({ history }) {
     }
   };
 
+  //
   return (
     <div>
       <CopyToClipboard
