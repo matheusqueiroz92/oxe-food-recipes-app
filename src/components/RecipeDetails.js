@@ -16,8 +16,6 @@ const RecipeDetails = ({ history }) => {
   const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes'));
 
   useEffect(() => {
-    const prevLocal = localStorage.getItem('user');
-    console.log(prevLocal);
     const getDetails = async () => {
       const URL = `https://www.the${isFood ? 'meal' : 'cocktail'}db.com/api/json/v1/1/lookup.php?i=${id.id}`;
       const response = await fetch(URL);
@@ -52,7 +50,6 @@ const RecipeDetails = ({ history }) => {
     }
     return false;
   };
-  console.log(isInProgress());
 
   const ingridientsAndMeasures = () => {
     const INGREDIENTS = Object.values(filterObject('Ingredient'));
@@ -122,7 +119,6 @@ const RecipeDetails = ({ history }) => {
           onClick={ () => history.push(`${pathname}/in-progress`) }
         >
           { isInProgress() ? 'Continue Recipe' : 'Start Recipe' }
-          Continue Recipe
         </button>
         <div className="recomendationsContainer">
           { recomendations && renderRecomendations() }
