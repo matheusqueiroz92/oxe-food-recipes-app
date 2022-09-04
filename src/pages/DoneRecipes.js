@@ -2,15 +2,15 @@ import React from 'react';
 import Header from '../components/Header';
 
 const toGo = [{
-  id: 15997,
+  id: 17203,
   type: 'bebida',
   nationality: '',
   category: 'Ordinary Drink',
-  alcoholicOrNot: 'Optional alcohol',
-  name: 'GG',
-  image: 'https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg',
+  alcoholicOrNot: 'Alcoholic',
+  name: 'Kir',
+  image: 'https://www.thecocktaildb.com/images/media/drink/apneom1504370294.jpg',
   doneDate: '22/09/2022 - 12:38',
-  tags: [],
+  tags: ['IBA', 'ContemporaryClassic'],
 }];
 
 localStorage.setItem('doneRecipes', JSON.stringify(toGo));
@@ -36,7 +36,7 @@ const DoneRecipes = () => {
         ) => (
           <p
             key={ i }
-            data-testid={ `${i}-${tagName}-horizontal-tag` }
+            data-testid={ `${i}-${tag}-horizontal-tag` }
           >
             { tag }
           </p>)) }
