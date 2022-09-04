@@ -3,7 +3,6 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from "./renderWithRouter";
-
 import meals from '../../cypress/mocks/meals';
 import drinks from '../../cypress/mocks/drinks';
 

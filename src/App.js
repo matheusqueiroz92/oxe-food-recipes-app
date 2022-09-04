@@ -5,7 +5,6 @@ import { Route, Switch } from 'react-router-dom';
 import RecipesProvider from './context/RecipesProvider';
 import Login from './pages/Login';
 import Foods from './pages/Foods';
-
 import Drinks from './pages/Drinks';
 import RecipeInProgress from './pages/RecipeInProgress';
 import Profile from './pages/Profile';
@@ -39,5 +38,4 @@ function App() {
     </RecipesProvider>
   );
 }
-
 export default App;

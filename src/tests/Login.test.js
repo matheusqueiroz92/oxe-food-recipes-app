@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from "./renderWithRouter";
 
-
 describe('Testando a pagina de Login', () => {
   test('Mostrar os elementos da pagina', () => {
     renderWithRouter(<App />);
