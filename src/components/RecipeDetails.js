@@ -105,14 +105,14 @@ const RecipeDetails = ({ history }) => {
 
         </p>
         <p data-testid="instructions">{ details.strInstructions }</p>
-        {/* <LikeAndShare history={ history } />
+        {/* <LikeAndShare history={ history } /> */}
         { isFood && <iframe
           title="Recipe Video"
           width="420"
           height="315"
           data-testid="video"
           src={ details.strYoutube }
-        />} */}
+        />}
         <button
           style={ { position: 'fixed', bottom: 0 } }
           type="button"

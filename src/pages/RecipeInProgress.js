@@ -48,14 +48,12 @@ function RecipeInProgress() {
       if (compare === 'foods') {
         const newPrev = JSON.parse(localStorage.getItem('inProgressRecipes'));
         setLocal(newPrev);
+
         setCheckedList(ingredientList);
       } const newPrev = JSON.parse(localStorage.getItem('inProgressRecipes'));
       setLocal(newPrev);
       setCheckedList(ingredientList);
     };
-    const newPrev = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    setLocal(newPrev);
-    setCheckedList(ingredientList);
 
     if (compare === 'foods') {
       fetchEndpoint(ENDPOINTFOOD, 'meals');
@@ -155,7 +153,6 @@ function RecipeInProgress() {
 
   return (
     <div>
-
       <h1 data-testid="recipe-title">
         {compare === 'foods'
           ? handleRecipe.strMeal : handleRecipe.strDrink}
@@ -237,4 +234,5 @@ RecipeInProgress.propTypes = {
     }),
   }).isRequired,
 };
+
 export default RecipeInProgress;
