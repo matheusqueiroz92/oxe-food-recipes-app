@@ -48,23 +48,14 @@ function RecipeInProgress() {
       if (compare === 'foods') {
         const newPrev = JSON.parse(localStorage.getItem('inProgressRecipes'));
         setLocal(newPrev);
-
-        /* const ingredientLocal = ingredientList.map((item) => ({
-          ingredient: item,
-          check: newPrev.meals[id].includes(item),
-        })); */
         setCheckedList(ingredientList);
-      } else {
-      const newPrev = JSON.parse(localStorage.getItem('inProgressRecipes'));
+      } const newPrev = JSON.parse(localStorage.getItem('inProgressRecipes'));
       setLocal(newPrev);
-
-        /* const ingredientLocal = ingredientList.map((item) => ({
-          ingredient: item,
-          check: newPrev.cocktails[id].includes(item),
-        })); */
-        setCheckedList(ingredientList);
-      }
+      setCheckedList(ingredientList);
     };
+    const newPrev = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    setLocal(newPrev);
+    setCheckedList(ingredientList);
 
     if (compare === 'foods') {
       fetchEndpoint(ENDPOINTFOOD, 'meals');
@@ -92,7 +83,7 @@ function RecipeInProgress() {
     enableCheck();
   }, [local, checkedList]);
 
-  const handleCheckComida = ({target}) => {
+  const handleCheckComida = ({ target }) => {
     console.log(target.value);
     if (compare === 'foods') {
       const prev = JSON.parse(localStorage.getItem('inProgressRecipes'));
@@ -104,7 +95,6 @@ function RecipeInProgress() {
         prev.meals[id] = [...prev.meals[id], target.value];
         localStorage.setItem('inProgressRecipes', JSON.stringify(prev));
         setLocal(prev);
-        console.log(prev);
       } else {
         const newPrev = prev.meals[id].filter((item) => item !== target.value);
         prev.meals[id] = newPrev;
@@ -151,18 +141,18 @@ function RecipeInProgress() {
   };
 
   const isChecked = (item) => {
-    console.log(local);
-    if( compare === 'foods') {
-      if (local) {
-        return local.meals[id].includes(item)
-          ? 'checked-item' : 'not-checked-ingredient';
-      } 
-    } 
-    if (local) {
+    if (compare === 'foods' && local) {
+      return local.meals[id].includes(item)
+        ? 'checked-item' : 'not-checked-ingredient';
+    }
+  };
+  const isCheckedDrink = (item) => {
+    if (compare === 'drinks' && local) {
       return local.cocktails[id].includes(item)
         ? 'checked-item' : 'not-checked-ingredient';
     }
   };
+
   return (
     <div>
 
@@ -221,7 +211,7 @@ function RecipeInProgress() {
                   local && local.cocktails[id].includes(item)
                 }
               />
-              <span className={ isChecked(item) }>{item}</span>
+              <span className={ isCheckedDrink(item) }>{item}</span>
             </label>))
         }
       </div>
@@ -247,5 +237,4 @@ RecipeInProgress.propTypes = {
     }),
   }).isRequired,
 };
-
 export default RecipeInProgress;
