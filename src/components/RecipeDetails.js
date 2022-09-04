@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
-import LikeAndShare from './LikeAndShare';
 import Recommended from './Recommended';
 
 const RecipeDetails = ({ history }) => {
@@ -103,7 +102,6 @@ const RecipeDetails = ({ history }) => {
 
         </p>
         <p data-testid="instructions">{ details.strInstructions }</p>
-        <LikeAndShare history={ history } />
         { isFood && <iframe
           title="Recipe Video"
           width="420"

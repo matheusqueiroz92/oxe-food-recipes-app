@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import LikeAndShare from '../components/LikeAndShare';
+import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import './RecipeInProgress.css';
 
 function RecipeInProgress() {
@@ -171,8 +172,7 @@ function RecipeInProgress() {
         { handleRecipe.strCategory }
       </h4>
       <div className="list-container">
-        {
-          checkedList.length > 0 && compare === 'foods'
+        { checkedList.length > 0 && compare === 'foods'
           && checkedList.map((item, index) => (
             <label
               key={ index }
@@ -189,11 +189,8 @@ function RecipeInProgress() {
                 }
               />
               <span className={ isChecked(item) }>{item}</span>
-            </label>))
-        }
-        {
-
-          checkedList.length > 0 && compare === 'drinks'
+            </label>))}
+        { checkedList.length > 0 && compare === 'drinks'
           && checkedList.map((item, index) => (
             <label
               key={ index }
@@ -210,12 +207,25 @@ function RecipeInProgress() {
                 }
               />
               <span className={ isCheckedDrink(item) }>{item}</span>
-            </label>))
-        }
+            </label>))}
       </div>
       <p data-testid="instructions">{handleRecipe.strInstructions}</p>
-      <LikeAndShare pathname={ pathname } />
-      <p data-testid="recipe-category" />
+      <button
+        type="button"
+        data-testid="share-btn"
+      >
+        <img className="icon" src={ shareIcon } alt="share" />
+      </button>
+      <button
+        type="button"
+        data-testid="favorite-btn"
+      >
+        <img
+          className="icon"
+          src={ whiteHeartIcon }
+          alt="favorite"
+        />
+      </button>
       <button
         type="button"
         data-testid="finish-recipe-btn"
@@ -227,7 +237,6 @@ function RecipeInProgress() {
     </div>
   );
 }
-
 RecipeInProgress.propTypes = {
   history: PropTypes.shape({
     location: PropTypes.shape({
