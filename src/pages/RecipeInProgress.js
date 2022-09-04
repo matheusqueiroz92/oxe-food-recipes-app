@@ -153,6 +153,7 @@ function RecipeInProgress() {
 
   return (
     <div>
+
       <h1 data-testid="recipe-title">
         {compare === 'foods'
           ? handleRecipe.strMeal : handleRecipe.strDrink}
@@ -234,5 +235,4 @@ RecipeInProgress.propTypes = {
     }),
   }).isRequired,
 };
-
 export default RecipeInProgress;
