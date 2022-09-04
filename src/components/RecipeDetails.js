@@ -3,6 +3,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import RecipesContext from '../context/RecipesContext';
 import Recommended from './Recommended';
+import shareIcon from '../images/shareIcon.svg';
+import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
 const RecipeDetails = ({ history }) => {
   const { doneRecipes } = useContext(RecipesContext);
@@ -121,6 +123,22 @@ const RecipeDetails = ({ history }) => {
         <div className="recomendationsContainer">
           { recomendations && renderRecomendations() }
         </div>
+        <button
+          type="button"
+          data-testid="share-btn"
+        >
+          <img className="icon" src={ shareIcon } alt="share" />
+        </button>
+        <button
+          type="button"
+          data-testid="favorite-btn"
+        >
+          <img
+            className="icon"
+            src={ whiteHeartIcon }
+            alt="favorite"
+          />
+        </button>
       </div>
     );
   };
