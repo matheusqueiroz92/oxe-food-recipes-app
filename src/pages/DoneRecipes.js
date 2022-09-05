@@ -28,7 +28,7 @@ import shareIcon from '../images/shareIcon.svg';
 // localStorage.setItem('doneRecipes', JSON.stringify(toGo));
 
 const DoneRecipes = () => {
-  const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+  const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
   const renderCategoryOrAlcoholic = (isFood, index, elem) => {
     if (isFood) {
       return (
