@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
-import shareIcon from '../images/shareIcon.svg';
-import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import LikeAndShare from '../components/LikeAndShare';
 import './RecipeInProgress.css';
 
 function RecipeInProgress() {
@@ -33,6 +32,7 @@ function RecipeInProgress() {
       const data = response[compareData][0];
 
       sethandleRecipe(data);
+      console.log(data);
 
       const ingredientFilter = Object.entries(data)
         .filter((ingredient) => ingredient[0].includes('strIngredient')
@@ -210,22 +210,7 @@ function RecipeInProgress() {
             </label>))}
       </div>
       <p data-testid="instructions">{handleRecipe.strInstructions}</p>
-      <button
-        type="button"
-        data-testid="share-btn"
-      >
-        <img className="icon" src={ shareIcon } alt="share" />
-      </button>
-      <button
-        type="button"
-        data-testid="favorite-btn"
-      >
-        <img
-          className="icon"
-          src={ whiteHeartIcon }
-          alt="favorite"
-        />
-      </button>
+      <LikeAndShare history={ history } data={ handleRecipe } />
       <button
         type="button"
         data-testid="finish-recipe-btn"
