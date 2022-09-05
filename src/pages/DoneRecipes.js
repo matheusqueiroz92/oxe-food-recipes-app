@@ -29,6 +29,21 @@ import shareIcon from '../images/shareIcon.svg';
 
 const DoneRecipes = () => {
   const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+  const renderCategoryOrAlcoholic = (isFood, index, elem) => {
+    if (isFood) {
+      return (
+        <p
+          data-testid={ `${index}-horizontal-top-text` }
+        >
+          { `${elem.nationality} - ${elem.category}` }
+        </p>);
+    } return (
+      <p
+        data-testid={ `${index}-horizontal-top-text` }
+      >
+        { elem.alcoholicOrNot }
+      </p>);
+  };
   const renderDoneRecipes = getDoneRecipes.map((elem, index) => {
     const isFood = elem.type === 'food';
     return (
@@ -38,12 +53,7 @@ const DoneRecipes = () => {
           src={ elem.image }
           data-testid={ `${index}-horizontal-image` }
         />
-        { isFood
-          && <p
-            data-testid={ `${index}-horizontal-top-text` }
-          >
-            { `${elem.nationality} - ${elem.category}` }
-             </p> }
+        { renderCategoryOrAlcoholic(isFood, index, elem) }
         <p data-testid={ `${index}-horizontal-name` }>{ elem.name }</p>
         <p data-testid={ `${index}-horizontal-done-date` }>{ elem.doneDate }</p>
         <img
