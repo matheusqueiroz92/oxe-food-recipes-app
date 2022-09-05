@@ -5,6 +5,7 @@ import RecipesContext from '../context/RecipesContext';
 import Recommended from './Recommended';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import './recommended.css';
 
 const RecipeDetails = ({ history }) => {
   const { doneRecipes } = useContext(RecipesContext);

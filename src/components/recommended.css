@@ -1,0 +1,5 @@
+.recomendationsContainer {
+  display: flex;
+  overflow-x: scroll;
+  width: 100%;
+}
