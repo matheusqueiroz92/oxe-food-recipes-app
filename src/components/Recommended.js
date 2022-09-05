@@ -18,6 +18,7 @@ const Recommended = ({ drinks, meals }) => {
         itemsToShow={ SWIP_NUMBER }
         itemsToScroll={ SWIP_NUMBER }
         breakPoints={ breakPoints }
+        enableSwipe={ false }
       >
         {drinks.map((e, index) => (
           <div key={ index } className="recomendationItem">
