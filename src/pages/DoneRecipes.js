@@ -1,19 +1,19 @@
 import React from 'react';
 import Header from '../components/Header';
 
-const toGo = [{
-  id: 17203,
-  type: 'bebida',
-  nationality: '',
-  category: 'Ordinary Drink',
-  alcoholicOrNot: 'Alcoholic',
-  name: 'Kir',
-  image: 'https://www.thecocktaildb.com/images/media/drink/apneom1504370294.jpg',
-  doneDate: '22/09/2022 - 12:38',
-  tags: ['IBA', 'ContemporaryClassic'],
-}];
+// const toGo = [{
+//   id: 17203,
+//   type: 'bebida',
+//   nationality: '',
+//   category: 'Ordinary Drink',
+//   alcoholicOrNot: 'Alcoholic',
+//   name: 'Kir',
+//   image: 'https://www.thecocktaildb.com/images/media/drink/apneom1504370294.jpg',
+//   doneDate: '23/06/2020',
+//   tags: ['IBA', 'ContemporaryClassic'],
+// }];
 
-localStorage.setItem('doneRecipes', JSON.stringify(toGo));
+// localStorage.setItem('doneRecipes', JSON.stringify(toGo));
 
 const DoneRecipes = () => {
   const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
@@ -32,11 +32,10 @@ const DoneRecipes = () => {
         .tags
         .map((
           tag,
-          i,
         ) => (
           <p
-            key={ i }
-            data-testid={ `${i}-${tag}-horizontal-tag` }
+            key={ index }
+            data-testid={ `${index}-${tag}-horizontal-tag` }
           >
             { tag }
           </p>)) }
