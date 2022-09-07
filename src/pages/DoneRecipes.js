@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Header from '../components/Header';
 import shareIcon from '../images/shareIcon.svg';
+import copyThing from '../components/ClipBoardCopy';
 
 // const toGo = [{
 //   id: 17203,
@@ -28,6 +29,7 @@ import shareIcon from '../images/shareIcon.svg';
 // localStorage.setItem('doneRecipes', JSON.stringify(toGo));
 
 const DoneRecipes = () => {
+  const [copied, setCopied] = useState(false);
   const getDoneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
   const renderCategoryOrAlcoholic = (isFood, index, elem) => {
     if (isFood) {
@@ -46,6 +48,14 @@ const DoneRecipes = () => {
   };
   const renderDoneRecipes = getDoneRecipes.map((elem, index) => {
     const isFood = elem.type === 'food';
+    const clickCopy = (type, id) => {
+      if (type === 'food') {
+        copyThing(`http://localhost:3000/foods/${id}`);
+      } else {
+        copyThing(`http://localhost:3000/drinks/${id}`);
+      }
+      setCopied(true);
+    };
     return (
       <div key={ index }>
         <img
@@ -56,12 +66,17 @@ const DoneRecipes = () => {
         { renderCategoryOrAlcoholic(isFood, index, elem) }
         <p data-testid={ `${index}-horizontal-name` }>{ elem.name }</p>
         <p data-testid={ `${index}-horizontal-done-date` }>{ elem.doneDate }</p>
-        <img
+        <button
           alt={ elem.name }
+          type="button"
           src={ shareIcon }
           data-testid={ `${index}-horizontal-share-btn` }
-          style={ { width: 20, height: 20 } }
-        />
+          style={ { width: 70, height: 25 } }
+          onClick={ () => clickCopy(elem.type, elem.id) }
+        >
+          Share
+
+        </button>
         { elem
           .tags
           .map((
@@ -103,42 +118,9 @@ const DoneRecipes = () => {
         </button>
       </div>
       { renderDoneRecipes }
+      { copied ? <span>Link copied!</span> : null }
     </div>
   );
 };
-/*  <=====Função de copiar o link de compartilhamento ====>
-        function shareRecipesClick() {
-        const copyText = document.getElementById('link-copy');
-        copyText.select();
-        copyText.setSelectionRange(0, Number('99999'));
-        navigator.clipboard.writeText(copyText.value);
-        }
-
-      <section>
-        <img src="" alt="" data-testid={ `${index}-horizontal-image` } />
-
-        <h6 data-testid={ `${index}-horizontal-top-text` }> categoria da receita</h6>
-
-        <h3 data-testid={ `${index}-horizontal-name` }> nome da receita </h3>
-
-        <h6 data-testid={ `${index}-horizontal-done-date` }> data da receita </h6>
-
-        <input type="text" value="http://localhost:3000/done-recipes" id="link-copy" />
-
-        <button
-          type="button"
-          data-testid={ `${index}-horizontal-share-btn` }
-          onClick={ shareRecipesClick }
-        >
-          <img
-            src={ shareIcon }
-            alt="share icon"
-            data-testid={ `${index}-horizontal-image` }
-          />
-        </button>
-
-        <p data-testid={ `${index}-${tagName}-horizontal-tag` }> tag Name </p>
-      </section>
-*/
 
 export default DoneRecipes;
