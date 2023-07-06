@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import './recipes.css';
+import './Recipes.css';
 
 function Recipes() {
   const history = useHistory();
@@ -137,6 +137,7 @@ function Recipes() {
             data-testid={ `${index}-recipe-card` }
           >
             <p
+              className="recipe-title"
               key={ `p ${index}` }
               data-testid={ `${index}-card-name` }
             >

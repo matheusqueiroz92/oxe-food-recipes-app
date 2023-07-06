@@ -4,6 +4,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Recipes from '../components/Recipes';
 import RecipesContext from '../context/RecipesContext';
+import './Drinks.css';
 
 function Drinks({ history }) {
   const { searchRecipes } = useContext(RecipesContext);

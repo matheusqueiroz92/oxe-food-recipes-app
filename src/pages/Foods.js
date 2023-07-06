@@ -14,10 +14,8 @@ function Foods({ history }) {
       <div>
         <Header title="Foods" profile search history={ history } />
       </div>
-      <div>
-        { searchRecipes.meals.length < 1 ? <Recipes />
-          : <p /> }
-      </div>
+      { searchRecipes.meals.length < 1 ? <Recipes />
+        : <p /> }
       { searchRecipes.meals.length === 1
         ? history.push(`/foods/${searchRecipes.meals[0].idMeal}`)
         : (

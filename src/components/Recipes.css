@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.recipes {
+  display: flex;
+  flex-wrap: wrap;
+  /* height: 640px;
+  width: 360px; */
+}
+
+.recipe-title {
+  color: red;
+}
+
+.recipe-img {
+  height: auto;
+  max-height: 100px;
+  max-width: 100px;
+  width: auto;
+  border-radius: 10px;
+}
+
+.card-recipe {
+  padding: 30px;
+}
